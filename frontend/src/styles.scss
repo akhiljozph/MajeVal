@@ -2,6 +2,13 @@
     padding: 0;
     margin: 0;
 }
+
+html,
 body {
-    height: 100vh;
+    height: 100%;
+    background-color: #F9FAFB;
 }
+
+// FuchsiaBlue: #784eca; || rgba(120, 78, 202) || hsl(260, 54, 55)
+// AthensGray: #f9fafb || rgba(255, 255, 255) || hsl(0, 0, 100)
+// EmeraldGreen: #43c16d || rgba(67, 193, 109) || hsl(140, 50, 51)

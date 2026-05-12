@@ -1,2 +1,7 @@
-<p>landing works!</p>
-<router-outlet />
+<section class="landing-wrapper">
+
+    <h1 class="app-title">{{ appTitle() }}</h1>
+    <h4 class="app-tag-line">{{ appTagLine() }}</h4>
+
+    <router-outlet />
+</section>

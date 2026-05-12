@@ -1,3 +1,11 @@
-.maj-root {
-    height: inherit;
+:host {
+    display: block;
+    height: 100%;
+
+    .maj-root {
+        height: inherit;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 }

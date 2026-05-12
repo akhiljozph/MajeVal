@@ -20,9 +20,9 @@ export const routes: Routes = [
             },
             {
                 path: 'sign-up',
-                component: SignUp,
+                loadComponent: () => import('../app/components/sign-up/sign-up').then(comp => comp.SignUp),
                 title: 'MajVal | SignUp'
             }
         ]
-    }   
+    }
 ];
