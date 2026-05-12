@@ -1,3 +1,28 @@
 import { Routes } from '@angular/router';
+import { SignIn } from './components/sign-in/sign-in';
+import { SignUp } from './components/sign-up/sign-up';
+import { Landing } from './components/landing/landing';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {
+        path: '',
+        component: Landing,
+        children: [
+            {
+                path: '',
+                redirectTo: 'sign-in',
+                pathMatch: 'full'
+            },
+            {
+                path: 'sign-in',
+                component: SignIn,
+                title: 'MajVal | SignIn'
+            },
+            {
+                path: 'sign-up',
+                component: SignUp,
+                title: 'MajVal | SignUp'
+            }
+        ]
+    }   
+];
