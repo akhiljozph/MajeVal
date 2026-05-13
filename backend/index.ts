@@ -17,7 +17,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json()); // Used for JSON body parsing
 app.use(express.urlencoded({ extended: false })); // Used for URL-encoded body parsing
 
-app.use(rootRouter);
+app.use('/api/v1', rootRouter);
 
 app.listen(PORT, () => {
     console.info(`Hi AJ! I've started and ready for your requests. Hit me at http://localhost:${PORT}:)`);
