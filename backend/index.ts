@@ -1,27 +1,24 @@
+import dotenv from 'dotenv';
+
+dotenv.config({ path: './configs/.env' });
+
 import express, { type Application } from "express";
-import mongoose from "mongoose";
 import logger from "morgan";
 import cors from "cors";
 
+import rootRouter from "./src/routes/index.ts";
+
 const app: Application = express();
 
-mongoose.connect("mongodb://localhost:27017/crud").then(() => {
-    console.log("Connected to database");
-}).catch((error) => {
-    console.log("Error:", error);
-});
+const PORT = process.env.PORT;
 
 app.use(logger("dev"));
 app.use(cors({ origin: "*" }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); // Used for JSON body parsing
+app.use(express.urlencoded({ extended: false })); // Used for URL-encoded body parsing
 
-app.use(function (req, res, next) {
-    res.status(404).send({
-        message: "Route not found"
-    });
-});
+app.use(rootRouter);
 
-app.listen(4000, () => {
-    console.log("The server is up...");
+app.listen(PORT, () => {
+    console.info(`Hi AJ! I've started and ready for your requests. Hit me at http://localhost:${PORT}:)`);
 });
