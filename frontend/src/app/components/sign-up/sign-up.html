@@ -1,1 +1,70 @@
-<p>sign-up works!</p>
+<div class="form-container">
+    <form class="registration-grid">
+
+        <div class="profile-section">
+            <span>PROFILE PIC</span>
+            <input type="file" hidden id="profileUpload">
+        </div>
+
+        <mat-form-field appearance="outline">
+            <mat-label>FIRST NAME</mat-label>
+            <input matInput placeholder="FIRST NAME">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>LAST NAME</mat-label>
+            <input matInput placeholder="LAST NAME">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select>
+                @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>MOBILE NUMBER</mat-label>
+            <input matInput placeholder="MOBILE NUMBER">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>EMAIL ADDRESS</mat-label>
+            <input matInput placeholder="EMAIL ADDRESS">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>GENDER</mat-label>
+            <mat-select>
+                @for (food of foods; track food) {
+                <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>DOB</mat-label>
+            <input matInput [matDatepicker]="datepicker" />
+            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker>
+                <mat-datepicker-actions>
+                    <button matButton matDatepickerCancel>Cancel</button>
+                    <button matButton="elevated" matDatepickerApply>Apply</button>
+                </mat-datepicker-actions>
+            </mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>USERNAME</mat-label>
+            <input matInput placeholder="USERNAME">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>PASSWORD</mat-label>
+            <input matInput placeholder="PASSWORD" type="password">
+        </mat-form-field>
+
+        <button type="submit" class="signup-btn full-width">SIGNUP</button>
+
+    </form>
+</div>

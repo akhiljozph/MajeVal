@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    box-sizing: content-box;
 
     .app-title {
         font-family: "Lobster Two", sans-serif;
@@ -12,5 +13,6 @@
     .app-tag-line {
         font-family: "Lobster Two", sans-serif;
         color: #43c16d; // EmeraldGreen
+        margin-bottom: 2em;
     }
 }

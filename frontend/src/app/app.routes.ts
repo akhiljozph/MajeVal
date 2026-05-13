@@ -16,12 +16,12 @@ export const routes: Routes = [
             {
                 path: 'sign-in',
                 component: SignIn,
-                title: 'MajVal | SignIn'
+                title: 'MajeVal | SignIn'
             },
             {
                 path: 'sign-up',
                 loadComponent: () => import('../app/components/sign-up/sign-up').then(comp => comp.SignUp),
-                title: 'MajVal | SignUp'
+                title: 'MajeVal | SignUp'
             }
         ]
     }

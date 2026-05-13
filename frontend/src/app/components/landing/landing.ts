@@ -8,6 +8,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './landing.scss',
 })
 export class Landing {
-  public readonly appTitle = signal('MajVal');
+  public readonly appTitle = signal('MajeVal');
   public readonly appTagLine = signal('Bridging the Gap Between Question and Mastery.');
 }

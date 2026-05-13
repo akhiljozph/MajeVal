@@ -1,4 +1,4 @@
-# Frontend of MajVal.
+# Frontend of MajeVal.
 ---
 
 # Frontend

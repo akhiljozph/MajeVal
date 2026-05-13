@@ -1,7 +1,7 @@
-# MajVal
+# MajeVal
 
 ## About the product
-MajVal is a project where an examiner can add a questionnaire for an examinee to answer. MajVal uses RBAC for each modules. MajVal has two different role and a super admin user. Super admin will manage all users of MajVal and it will a preconfigured one.
+MajeVal is a project where an examiner can add a questionnaire for an examinee to answer. MajeVal uses RBAC for each modules. MajeVal has two different role and a super admin user. Super admin will manage all users of MajeVal and it will a preconfigured one.
 
 ## Roles
 - Examiner

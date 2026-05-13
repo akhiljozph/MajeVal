@@ -1,25 +1,46 @@
-* {
-    padding: 0;
-    margin: 0;
+@use '@angular/material' as mat;
+
+:root {
+  --fuchsia-blue: #784eca;
+  --athens-gray: #f9fafb;
+  --emerald-green: #43c16d;
+  --text-dark: #333;
 }
 
-html,
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  @include mat.theme((color: (primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    ));
+}
+
 body {
-    height: 100%;
-    background-color: #F9FAFB;
+  height: 100%;
+  background-color: #f9fafb;
+
+  color-scheme: light;
+
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+
+  margin: 0;
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
-
-// FuchsiaBlue: #784eca; || rgba(120, 78, 202) || hsl(260, 54, 55)
-// AthensGray: #f9fafb || rgba(255, 255, 255) || hsl(0, 0, 100)
-// EmeraldGreen: #43c16d || rgba(67, 193, 109) || hsl(140, 50, 51)

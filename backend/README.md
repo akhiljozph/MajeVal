@@ -1,1 +1,1 @@
-# Backend of MajVal.
+# Backend of MajeVal.
