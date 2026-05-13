@@ -1,15 +1,21 @@
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
-interface Food {
+interface IOption {
   value: string;
   viewValue: string;
+  code?: string;
 }
 @Component({
   selector: 'maj-sign-up',
@@ -20,9 +26,35 @@ interface Food {
   styleUrl: './sign-up.scss',
 })
 export class SignUp {
-  foods: Food[] = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  imagePreview: string | null = null;
+
+  countries: IOption[] = [
+    { value: 'IND', viewValue: 'India' },
+    { value: 'SLK', viewValue: 'Sri Lanka' },
+    { value: 'BAN-2', viewValue: 'Bangladesh' },
   ];
+
+  genders: IOption[] = [
+    { value: 'MALE', viewValue: 'Male' },
+    { value: 'FEMALE', viewValue: 'Female' },
+    { value: 'OTHER', viewValue: 'Others' },
+  ];
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      this.cdr.detectChanges();
+      input.value = '';
+    };
+    reader.readAsDataURL(file);
+  }
 }
