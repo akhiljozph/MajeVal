@@ -1,16 +1,19 @@
 import dotenv from 'dotenv';
 
-dotenv.config({ path: './configs/.env' });
+dotenv.config({ path: './src/configs/.env' });
 
 import express, { type Application } from "express";
 import logger from "morgan";
 import cors from "cors";
 
 import rootRouter from "./src/routes/index.ts";
+import { initializeConnectionToDatabase } from './src/configs/database.config.ts';
 
 const app: Application = express();
 
 const PORT = process.env.PORT;
+
+initializeConnectionToDatabase();
 
 app.use(logger("dev"));
 app.use(cors({ origin: "*" }));

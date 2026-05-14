@@ -24,6 +24,8 @@
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
+    "inversify": "^8.1.0",
+    "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
