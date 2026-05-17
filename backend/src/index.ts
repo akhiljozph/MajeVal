@@ -2,12 +2,12 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: './src/configs/.env' });
 
+import cors from "cors";
 import express, { type Application } from "express";
 import logger from "morgan";
-import cors from "cors";
 
-import rootRouter from "./src/routes/index.ts";
-import { initializeConnectionToDatabase } from './src/configs/database.config.ts';
+import { initializeConnectionToDatabase } from './configs/database.config.ts';
+import rootRouter from "./routes/index.ts";
 
 const app: Application = express();
 
