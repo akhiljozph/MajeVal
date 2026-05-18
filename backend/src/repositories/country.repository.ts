@@ -16,7 +16,8 @@ export default class CountryRepository {
 
     async findCountry(country: any) {
         try {
-            return await Country.findOne({ "code": `${country?.code}` });
+            console.log(country)
+            return await Country.findOne({ "countryCode": `${country?.countryCode}` });
         } catch (error) {
             throw error;
         }

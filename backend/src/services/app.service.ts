@@ -13,4 +13,12 @@ export default class AppService {
             throw error;
         }
     }
+
+    async findCountry(country: any) {
+        try {
+            return await this.countryRepository.findCountry(country);
+        } catch (error) {
+            throw error;
+        }
+    }
 }
