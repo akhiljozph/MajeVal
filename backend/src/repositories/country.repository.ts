@@ -3,7 +3,7 @@ import { injectable } from "inversify";
 import Country from "../models/country.model.ts";
 
 @injectable()
-export default class AppRepository {
+export default class CountryRepository {
     constructor() { }
 
     async addCountry(country: any) {
