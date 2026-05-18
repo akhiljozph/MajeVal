@@ -6,7 +6,11 @@ export default class AppService {
     constructor(@inject(AppRepository) private appRepository: AppRepository) { }
 
 
-    addCountry() {
-        console.log('Inside service.')
+    addCountry(country: any) {
+        try {
+            this.appRepository.addCountry(country);
+        } catch (error) {
+            throw error;
+        }
     }
 }

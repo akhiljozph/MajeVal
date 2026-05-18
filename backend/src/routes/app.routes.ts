@@ -19,11 +19,27 @@ appRouter.get('/countries',
 
 appRouter.post('/countries',
     validate(countrySchema),
-    (req: Request, res: Response) => {
-        appController.addCountry();
-        res.status(200).json({
-            "message": "Created"
-        })
+    async (req: Request, res: Response) => {
+        try {
+            await appController.addCountry(req.body);
+
+            res.status(200).json({
+                "message": "Created"
+            });
+        } catch (error: any) {
+            console.error(error);
+            if (error.message === 'FOUND') {
+                res.status(409).json({
+                    "message": "Country exists!"
+                })
+            }
+
+            res.status(400).json({
+                "message": error.message
+            })
+        } finally {
+            console.info('POST /api/v1/app/countries: Invokation completed');
+        }
     }
 );
 
