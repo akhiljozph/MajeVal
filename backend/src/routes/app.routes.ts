@@ -1,19 +1,30 @@
 import { Router, type Request, type Response } from "express";
 
+import AppController from "../controllers/app.controller.ts";
+import { container } from "../di-container.ts";
 import { validate } from "../middlewares/validation.middleware.ts";
 import { countrySchema } from "../schemas/app.schema.ts";
-import { container } from "../di-container.ts";
-import AppController from "../controllers/app.controller.ts";
 
 const appRouter = Router();
 
 const appController = container.get<AppController>(AppController);
 
 appRouter.get('/countries',
-    (req: Request, res: Response) => {
-        res.status(200).json({
-            "message": "Created"
-        })
+    async (req: Request, res: Response) => {
+        try {
+            const countries = await appController.getCountries();
+            console.log(countries);
+            res.status(200).json({
+                "message": "Success",
+                "data": countries
+            })
+        } catch (error: any) {
+            res.status(400).json({
+                "message": error.message
+            })
+        } finally {
+            console.info('GET /api/v1/app/countries: Invocation completed');
+        }
     }
 );
 
@@ -38,7 +49,7 @@ appRouter.post('/countries',
                 "message": error.message
             })
         } finally {
-            console.info('POST /api/v1/app/countries: Invokation completed');
+            console.info('POST /api/v1/app/countries: Invocation completed');
         }
     }
 );

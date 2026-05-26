@@ -6,6 +6,14 @@ import Country from "../models/country.model.ts";
 export default class CountryRepository {
     constructor() { }
 
+    async getCountries() {
+        try {
+            return await Country.find({});
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async addCountry(country: any) {
         try {
             await Country.insertOne(country);

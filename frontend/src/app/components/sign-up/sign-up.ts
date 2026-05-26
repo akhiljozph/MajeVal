@@ -1,16 +1,18 @@
-import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   inject,
+  OnInit,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { CountryService } from '../../core/services/country';
 
 interface IOption {
   value: string;
@@ -25,22 +27,42 @@ interface IOption {
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
-export class SignUp {
+export class SignUp implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
 
   imagePreview: string | null = null;
 
-  countries: IOption[] = [
-    { value: 'IND', viewValue: 'India' },
-    { value: 'SLK', viewValue: 'Sri Lanka' },
-    { value: 'BAN-2', viewValue: 'Bangladesh' },
-  ];
+  countries: IOption[] = [];
 
   genders: IOption[] = [
     { value: 'MALE', viewValue: 'Male' },
     { value: 'FEMALE', viewValue: 'Female' },
     { value: 'OTHER', viewValue: 'Others' },
   ];
+
+  constructor(
+    private countryService: CountryService
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.countryService.getCountry().subscribe({
+      next: (response) => {
+        this.countries = response?.data.map((country: any) => {
+          return {
+            code: country?.countryCode,
+            value: country?.code,
+            viewValue: country?.countryName
+
+          }
+        });
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    })
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;

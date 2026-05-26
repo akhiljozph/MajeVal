@@ -1,13 +1,20 @@
 import { inject, injectable } from "inversify";
 
 import AppService from "../services/app.service.ts";
-import CountryRepository from "../repositories/country.repository.ts";
 
 @injectable()
 export default class AppController {
     constructor(
         @inject(AppService) private appService: AppService
     ) { }
+
+    async getCountries() {
+        try {
+            return await this.appService.getCountries();
+        } catch (error) {
+            throw error
+        }
+    }
 
     async addCountry(country: any) {
         try {

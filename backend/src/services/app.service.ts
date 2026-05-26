@@ -5,6 +5,13 @@ import CountryRepository from "../repositories/country.repository.ts";
 export default class AppService {
     constructor(@inject(CountryRepository) private countryRepository: CountryRepository) { }
 
+    async getCountries() {
+        try {
+            return await this.countryRepository.getCountries();
+        } catch (error) {
+            throw error;
+        }
+    }
 
     addCountry(country: any) {
         try {
