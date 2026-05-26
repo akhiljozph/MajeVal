@@ -6,7 +6,7 @@ export const IS_PUBLIC_API = new HttpContextToken<boolean>(() => false);
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   const baseUrl = environment.baseUrl;
-  const token = '' // localStorage.getItem('token');
+  const token = 'ss' // localStorage.getItem('token');
   const isPublic = req.context.get(IS_PUBLIC_API);
 
   const fullUrl = req.url.startsWith('http') ? req.url : `${baseUrl}${req.url}`;
@@ -16,6 +16,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   };
 
   if (token && !isPublic) {
+    console.log('Inside token verification.')
   }
 
   let modifiedReq = req.clone({
