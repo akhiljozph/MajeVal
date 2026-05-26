@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { IBaseResponse } from '../../core/interfaces/base-response';
+import { ICountry } from '../../core/interfaces/country';
 import { CountryService } from '../../core/services/country';
 
 interface IOption {
@@ -48,13 +50,12 @@ export class SignUp implements OnInit {
 
   ngOnInit(): void {
     this.countryService.getCountry().subscribe({
-      next: (response) => {
+      next: (response: IBaseResponse<ICountry[]>) => {
         this.countries = response?.data.map((country: any) => {
           return {
             code: country?.countryCode,
             value: country?.code,
             viewValue: country?.countryName
-
           }
         });
       },
