@@ -2,7 +2,7 @@ import { rateLimit } from 'express-rate-limit';
 
 export const apiGeneralLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 1,
+    max: 10,
     standardHeaders: 'draft-7',
     legacyHeaders: false,
     message: {

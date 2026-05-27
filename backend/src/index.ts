@@ -4,6 +4,8 @@ dotenv.config({ path: './src/configs/.env' });
 
 import cors from "cors";
 import express, { type Application } from "express";
+import mongoSanitize from 'express-mongo-sanitize';
+import helmet from 'helmet';
 import logger from "morgan";
 
 import { initializeConnectionToDatabase } from './configs/database.config.ts';
@@ -11,14 +13,21 @@ import rootRouter from "./routes/index.ts";
 
 const app: Application = express();
 
+app.use(helmet());
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+app.use(logger("dev"));
+app.use(express.json({ limit: process.env.PAYLOAD_LIMIT })); // Used for JSON body parsing
+app.use(express.urlencoded({ extended: true, limit: process.env.PAYLOAD_LIMIT })); // Used for URL-encoded body parsing
+app.use(mongoSanitize());
+
 const PORT = process.env.PORT;
 
 initializeConnectionToDatabase();
-
-app.use(logger("dev"));
-app.use(cors({ origin: "*" }));
-app.use(express.json()); // Used for JSON body parsing
-app.use(express.urlencoded({ extended: false })); // Used for URL-encoded body parsing
 
 app.use('/api/v1', rootRouter);
 
