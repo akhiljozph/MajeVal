@@ -23,7 +23,7 @@ app.use(cors({
 app.use(logger("dev"));
 app.use(express.json({ limit: process.env.PAYLOAD_LIMIT })); // Used for JSON body parsing
 app.use(express.urlencoded({ extended: true, limit: process.env.PAYLOAD_LIMIT })); // Used for URL-encoded body parsing
-app.use(mongoSanitize());
+// app.use(mongoSanitize()); // To prevent NoSQL injection, but not supported in Express 5.
 
 const PORT = process.env.PORT;
 
