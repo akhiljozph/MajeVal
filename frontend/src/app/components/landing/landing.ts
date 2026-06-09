@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'maj-landing',
   imports: [RouterOutlet],
   templateUrl: './landing.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './landing.scss',
 })
 export class Landing {
