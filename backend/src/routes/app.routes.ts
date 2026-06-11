@@ -34,7 +34,7 @@ appRouter.post('/countries',
         try {
             await appController.addCountry(req.body);
 
-            res.status(200).json({
+            res.status(201).json({
                 "message": "Created"
             });
         } catch (error: any) {
