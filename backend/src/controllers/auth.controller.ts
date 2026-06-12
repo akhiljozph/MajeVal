@@ -8,5 +8,11 @@ export default class AuthController {
         @inject(AuthService) private authService: AuthService
     ) { }
 
-
+    async addAccount(account: any) {
+        try {
+            this.authService.addAccount(account);
+        } catch (error) {
+            throw error;
+        }
+    }
 }

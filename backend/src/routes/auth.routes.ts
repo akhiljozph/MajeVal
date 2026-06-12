@@ -13,7 +13,7 @@ authRouter.post('/signup',
     validate(signupSchema),
     async (req: Request, res: Response) => {
         try {
-            // await authController.
+            await authController.addAccount(req.body);
 
             res.status(201).json({
                 "message": "Created"
@@ -21,7 +21,7 @@ authRouter.post('/signup',
         } catch (error: any) {
             console.error(error);
         } finally {
-            console.info('POST /api/v1/signup: Invocation completed');
+            console.info('POST /api/v1/auth/signup: Invocation completed');
         }
     }
 );

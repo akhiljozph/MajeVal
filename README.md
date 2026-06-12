@@ -18,6 +18,9 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
     - Angular (V22.0.0) with SSR & SSG
 - Backend
     - Express.js
+    - Inversify.js
+    - Zod
+    - helmet
 - DB
     - MongoDB
     - ORM - Mongoose
