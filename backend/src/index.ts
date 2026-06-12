@@ -13,7 +13,7 @@ import rootRouter from "./routes/index.ts";
 
 const app: Application = express();
 
-app.use(helmet());
+app.use(helmet()); // Automatically configures, injects, or hides specific headers to add an immediate layer of defense.
 app.use(cors({
     origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
