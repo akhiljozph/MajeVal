@@ -10,7 +10,7 @@ export default class AuthController {
 
     async addAccount(account: any) {
         try {
-            this.authService.addAccount(account);
+            await this.authService.addAccount(account);
         } catch (error) {
             throw error;
         }
