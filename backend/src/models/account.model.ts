@@ -15,7 +15,8 @@ const AccountSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     country: {
         type: String,
@@ -31,7 +32,8 @@ const AccountSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,

@@ -20,6 +20,9 @@ authRouter.post('/signup',
             });
         } catch (error: any) {
             console.error(error);
+            res.status(400).json({
+                "message": error.message
+            })
         } finally {
             console.info('POST /api/v1/auth/signup: Invocation completed');
         }
