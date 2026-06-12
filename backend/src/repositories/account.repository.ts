@@ -8,7 +8,7 @@ export default class AccountRepository {
 
     async addAccount(account: any) {
         try {
-            await Account.insertOne(account);
+            return await Account.insertOne(account);
         } catch (error) {
             throw error;
         }
