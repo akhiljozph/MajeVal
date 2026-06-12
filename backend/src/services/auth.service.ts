@@ -8,7 +8,7 @@ export default class AuthService {
 
     async addAccount(account: any) {
         try {
-            await this.accountRepository.addAccount(account);
+            return await this.accountRepository.addAccount(account);
         } catch (error) {
             throw error;
         }
