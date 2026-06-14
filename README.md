@@ -20,7 +20,9 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
     - Express.js
     - Inversify.js
     - Zod
-    - helmet
+    - Helmet
+    - Nodemailer
+    - Express-rate-limiter
 - DB
     - MongoDB
     - ORM - Mongoose
