@@ -13,4 +13,12 @@ export default class AccountRepository {
             throw error;
         }
     }
+
+    async findAccountByUsername(username: string) {
+        try {
+            return Account.find({ username: username });
+        } catch (error: any) {
+            throw error;
+        }
+    }
 }

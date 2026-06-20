@@ -14,4 +14,16 @@ export default class AuthService {
         }
     }
 
+    async verifyAccount(username: string, password: string) {
+        try {
+            const account = await this.accountRepository.findAccountByUsername(username);
+
+            if (!account) {
+                throw new Error('Invalid username.');
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
