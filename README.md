@@ -26,6 +26,7 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
     - Express-rate-limiter
     - Cors
     - Nodemon
+    - Opentelemetry
 - DB
     - MongoDB
     - ORM - Mongoose

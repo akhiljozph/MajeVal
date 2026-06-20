@@ -29,10 +29,19 @@ authRouter.post('/signup',
     }
 );
 
-authRouter.post('/signin', (req: Request, res: Response) => {
-    res.status(200).json({
-        "message": "Success"
-    })
-});
+authRouter.post('/signin',
+    async (req: Request, res: Response) => {
+        try {
+            await authController.verifyAccount(req.body);
+        } catch (error: any) {
+
+            console.error(error);
+            res.status(400).json({
+                "message": error.message
+            })
+        } finally {
+            console.info('POST /api/v1/auth/signin: Invocation completed');
+        }
+    });
 
 export default authRouter;

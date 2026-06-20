@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 
-import AuthService from "../services/auth.service.ts";
 import MailTransporter from "../helpers/mail-transporter.ts";
+import AuthService from "../services/auth.service.ts";
 
 @injectable()
 export default class AuthController {
@@ -12,14 +12,24 @@ export default class AuthController {
 
     async addAccount(account: any) {
         try {
-            const accountCreationresult = await this.authService.addAccount(account);
+            const accountCreationResult = await this.authService.addAccount(account);
 
-            const { firstName, email, role } = accountCreationresult;
+            const { firstName, email, role } = accountCreationResult;
 
             if (role !== 'superadmin') {
                 await this.mailTransporter.sendWelcomeEmail(email, firstName, role!);
             }
 
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async verifyAccount(account: any) {
+        try {
+            const { username, password } = account.body;
+
+            await this.authService.verifyAccount(username, password);
         } catch (error) {
             throw error;
         }
