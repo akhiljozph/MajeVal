@@ -1,4 +1,4 @@
-import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -25,31 +25,13 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   });
 
   return next(modifiedReq).pipe(
-    catchError((error: unknown) => {
-      if (error instanceof HttpErrorResponse) {
-        const backendMessage = error.error?.message || 'An unexpected server error occurred.';
-        switch (error.status) {
-          case 401:
-            alert(`Session Expired: ${backendMessage}`);
-            break;
 
-          case 429:
-            alert(`Slow down! ${backendMessage}`);
-            break;
+    catchError((error) => {
 
-          case 400:
-            alert(`Validation Failed: ${backendMessage}`);
-            break;
-
-          default:
-            alert(backendMessage);
-            break;
-        }
-      } else {
-        console.error('An internal frontend error occurred:', error);
-      }
       return throwError(() => error);
+
     })
+
   );
 
 };
