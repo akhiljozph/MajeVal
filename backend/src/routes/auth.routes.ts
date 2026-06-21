@@ -33,10 +33,11 @@ authRouter.post('/signin',
     validate(signinSchema),
     async (req: Request, res: Response) => {
         try {
-            await authController.verifyAccount(req.body);
+            const data = await authController.verifyAccount(req.body);
 
             res.status(200).json({
-                "message": "Success"
+                "message": "Success",
+                data
             });
         } catch (error: any) {
 
