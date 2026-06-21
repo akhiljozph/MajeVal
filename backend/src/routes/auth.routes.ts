@@ -3,7 +3,7 @@ import { Router, type Request, type Response } from "express";
 import AuthController from "../controllers/auth.controller.ts";
 import { container } from "../di-container.ts";
 import { validate } from "../middlewares/validation.middleware.ts";
-import { signupSchema } from "../schemas/auth.schema.ts";
+import { signinSchema, signupSchema } from "../schemas/auth.schema.ts";
 
 const authRouter = Router();
 
@@ -30,9 +30,15 @@ authRouter.post('/signup',
 );
 
 authRouter.post('/signin',
+    validate(signinSchema),
     async (req: Request, res: Response) => {
         try {
-            await authController.verifyAccount(req.body);
+            const data = await authController.verifyAccount(req.body);
+
+            res.status(200).json({
+                "message": "Success",
+                data
+            });
         } catch (error: any) {
 
             console.error(error);

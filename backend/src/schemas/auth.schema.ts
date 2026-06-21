@@ -25,3 +25,10 @@ export const signupSchema = z.object({
         })
     })
 });
+
+export const signinSchema = z.object({
+    body: z.object({
+        username: z.string(),
+        password: z.string()
+    })
+});
