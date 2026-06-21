@@ -4,7 +4,7 @@ dotenv.config({ path: './src/configs/.env' });
 
 import cors from "cors";
 import express, { type Application } from "express";
-import mongoSanitize from 'express-mongo-sanitize';
+// import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import logger from "morgan";
 

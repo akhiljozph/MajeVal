@@ -27,9 +27,9 @@ export default class AuthController {
 
     async verifyAccount(account: any) {
         try {
-            const { username, password } = account.body;
+            const { username, password } = account;
 
-            await this.authService.verifyAccount(username, password);
+            return await this.authService.verifyAccount(username, password);
         } catch (error) {
             throw error;
         }

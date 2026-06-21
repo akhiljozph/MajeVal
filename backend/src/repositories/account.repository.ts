@@ -16,7 +16,7 @@ export default class AccountRepository {
 
     async findAccountByUsername(username: string) {
         try {
-            return Account.find({ username: username });
+            return Account.findOne({ username: username });
         } catch (error: any) {
             throw error;
         }
