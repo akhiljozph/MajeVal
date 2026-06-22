@@ -12,7 +12,7 @@ export default class AuthService {
     constructor(@inject(AccountRepository) private accountRepository: AccountRepository) { }
 
     private get tokenExpiresIn() {
-        return Number(process.env.JWT_EXPIRES_IN) || 3600;
+        return Number(process.env.JWT_EXPIRES_IN);
     }
 
     private get JWTSecret() {
@@ -62,7 +62,6 @@ export default class AuthService {
                     mobileNumber: account.mobileNumber,
                     dateOfBirth: account.dateOfBirth,
                     username: account.username,
-                    password: account.password,
                     gender: account.gender,
                     role: account.role,
                 }
