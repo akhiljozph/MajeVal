@@ -23,7 +23,7 @@
         <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
             <mat-select>
-                @for (country of countries; track country) {
+                @for (country of countries; track country?.countryCode) {
                 <mat-option [value]="country.value">{{country.viewValue}}</mat-option>
                 }
             </mat-select>
