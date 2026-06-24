@@ -4,6 +4,7 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +13,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { form, FormField } from '@angular/forms/signals';
+
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
 import { CountryService } from '../../core/services/country';
@@ -23,7 +26,15 @@ interface IOption {
 }
 @Component({
   selector: 'maj-sign-up',
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, FormsModule, MatDatepickerModule, MatButtonModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatButtonModule,
+    FormField
+  ],
   providers: [provideNativeDateAdapter()],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sign-up.html',
@@ -41,6 +52,20 @@ export class SignUp implements OnInit {
     { value: 'FEMALE', viewValue: 'Female' },
     { value: 'OTHER', viewValue: 'Others' },
   ];
+
+  signUpModel = signal<any>({
+    firstName: '',
+    lastName: '',
+    country: '',
+    mobileNumber: '',
+    emailAddress: '',
+    gender: '',
+    dateOfBirth: '',
+    username: '',
+    password: ''
+  });
+
+  signUpForm = form(this.signUpModel)
 
   constructor(
     private countryService: CountryService
