@@ -1,15 +1,17 @@
 <section>
     <h2>Sign In</h2>
 
-    <section>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
         <div>
             Username
-            <input />
+            <input formControlName="username" />
         </div>
         <div>
             Password
-            <input />
+            <input type="password" formControlName="password" />
         </div>
-    </section>
+
+        <button type="submit">Sign In</button>
+    </form>
     New to MajeVal? Create an account <a routerLink="/sign-up">here.</a>
 </section>

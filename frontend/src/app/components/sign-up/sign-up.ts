@@ -53,19 +53,19 @@ export class SignUp implements OnInit {
     { value: 'OTHER', viewValue: 'Others' },
   ];
 
-  signUpModel = signal<any>({
-    firstName: '',
-    lastName: '',
-    country: '',
-    mobileNumber: '',
-    emailAddress: '',
-    gender: '',
-    dateOfBirth: '',
-    username: '',
-    password: ''
-  });
+  // signUpModel = signal<any>({
+  //   firstName: '',
+  //   lastName: '',
+  //   country: '',
+  //   mobileNumber: '',
+  //   emailAddress: '',
+  //   gender: '',
+  //   dateOfBirth: '',
+  //   username: '',
+  //   password: ''
+  // });
 
-  signUpForm = form(this.signUpModel)
+  // signUpForm = form(this.signUpModel)
 
   constructor(
     private countryService: CountryService
