@@ -16,7 +16,11 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
 ## Techincal Stack
 - Frontend
     - Angular (V22.0.0) with SSR & SSG
+        - Reactive forms
+        - Signal forms
+        - Interceptor
     - RxJS
+        - `retry()`
 - Backend
     - Express.js
     - Inversify.js
