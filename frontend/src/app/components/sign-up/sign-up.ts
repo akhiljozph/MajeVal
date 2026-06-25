@@ -18,6 +18,7 @@ import { form, FormField } from '@angular/forms/signals';
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
 import { CountryService } from '../../core/services/country';
+import { AuthService } from '../../core/services/auth';
 
 interface IOption {
   value: string;
@@ -27,14 +28,17 @@ interface IOption {
 
 interface ISignUpModel {
   firstName: string,
+  middleName: string,
   lastName: string,
+  email: string,
   country: string,
   mobileNumber: string,
-  emailAddress: string,
-  gender: string,
+  profilePicture: string,
+  role: string,
   dateOfBirth: string,
   username: string,
-  password: string
+  password: string,
+  gender: string
 }
 @Component({
   selector: 'maj-sign-up',
@@ -66,21 +70,25 @@ export class SignUp implements OnInit {
   ];
 
   signUpModel = signal<ISignUpModel>({
-    firstName: '',
-    lastName: '',
-    country: '',
-    mobileNumber: '',
-    emailAddress: '',
-    gender: '',
-    dateOfBirth: '',
-    username: '',
-    password: ''
+    "firstName": "",
+    "middleName": "",
+    "lastName": "",
+    "email": "",
+    "country": "",
+    "mobileNumber": "",
+    "profilePicture": "",
+    "role": "",
+    "dateOfBirth": "",
+    "username": "",
+    "password": "",
+    "gender": ""
   });
 
   signUpForm = form(this.signUpModel)
 
   constructor(
-    private countryService: CountryService
+    private countryService: CountryService,
+    private authService: AuthService
   ) {
 
   }
@@ -99,7 +107,7 @@ export class SignUp implements OnInit {
       error: (err) => {
         console.error(err.message);
       }
-    })
+    });
   }
 
   onFileSelected(event: Event) {
@@ -119,6 +127,11 @@ export class SignUp implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.signUpForm().value());
+    const accountData = this.signUpForm().value();
+    this.authService.accountSignUp(accountData).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      }
+    });
   }
 }
