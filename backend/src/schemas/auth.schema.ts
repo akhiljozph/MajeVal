@@ -11,17 +11,17 @@ export const signupSchema = z.object({
         dateOfBirth: z.string().date(),
         username: z.string(),
         password: z.string(),
-        gender: z.enum(['male', 'female', 'other'], {
+        gender: z.enum(['MALE', 'FEMALE', 'OTHER'], {
             error: (issue) =>
                 issue.input === undefined
                     ? 'Gender is required'
-                    : 'Gender must be male, female, or other'
+                    : 'Gender must be MALE, FEMALE, or OTHER'
         }),
-        role: z.enum(['superadmin', 'admin', 'examiner', 'examinee'], {
+        role: z.enum(['SUPERADMIN', 'ADMIN', 'EXAMINER', 'EXAMINEE'], {
             error: (issue) =>
                 issue.input === undefined
                     ? 'Role is required'
-                    : 'Role must be superadmin, admin, examiner, or examinee'
+                    : 'Role must be SUPERADMIN, ADMIN, EXAMINER, or EXAMINEE'
         })
     })
 });

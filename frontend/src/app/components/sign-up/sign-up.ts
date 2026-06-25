@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { form, FormField } from '@angular/forms/signals';
+import { DatePipe } from '@angular/common';
 
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
@@ -51,7 +52,7 @@ interface ISignUpModel {
     MatButtonModule,
     FormField
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), DatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
@@ -77,7 +78,7 @@ export class SignUp implements OnInit {
     "country": "",
     "mobileNumber": "",
     "profilePicture": "",
-    "role": "",
+    "role": "EXAMINEE",
     "dateOfBirth": "",
     "username": "",
     "password": "",
@@ -88,7 +89,8 @@ export class SignUp implements OnInit {
 
   constructor(
     private countryService: CountryService,
-    private authService: AuthService
+    private authService: AuthService,
+    private datePipe: DatePipe
   ) {
 
   }
@@ -127,10 +129,18 @@ export class SignUp implements OnInit {
   }
 
   onSubmit(): void {
-    const accountData = this.signUpForm().value();
+    let accountData = this.signUpForm().value();
+
+    accountData = {
+      ...accountData,
+      dateOfBirth: this.datePipe.transform(accountData.dateOfBirth, 'yyyy-MM-dd') ?? ''
+    }
     this.authService.accountSignUp(accountData).subscribe({
       next: (response: any) => {
         console.log(response);
+      },
+      error: (err) => {
+        console.error(err.message);
       }
     });
   }
