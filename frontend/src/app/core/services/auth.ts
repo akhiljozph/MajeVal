@@ -1,8 +1,9 @@
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 
 import { IBaseResponse } from '../interfaces/base-response';
+import { IS_PUBLIC_API } from '../interceptors/auth-interceptor';
 
 @Service()
 export class AuthService {
@@ -11,5 +12,11 @@ export class AuthService {
 
     accountSignUp(accountData: any): Observable<IBaseResponse<any>> {
         return this.httpService.post<IBaseResponse<any>>('auth/signup', accountData);
+    }
+
+    checkEmailAvailability(emailAddress: string): Observable<IBaseResponse<any>> {
+        return this.httpService.get<IBaseResponse<any>>(`app/check-email/${emailAddress}`, {
+            context: new HttpContext().set(IS_PUBLIC_API, true)
+        });
     }
 }

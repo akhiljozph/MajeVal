@@ -54,4 +54,32 @@ appRouter.post('/countries',
     }
 );
 
+appRouter.get('/check-email/:emailAddress',
+    async (req: Request, res: Response) => {
+        try {
+            const { emailAddress } = req.params as { emailAddress: string };
+
+            if (!emailAddress) {
+                res.status(400).json({
+                    "message": "Email address is required!"
+                })
+                return;
+            }
+
+            const result = await appController.checkEmailAvailability(emailAddress);
+
+            res.status(200).json({
+                isTaken: result
+            });
+
+        } catch (error: any) {
+            res.status(400).json({
+                "message": error.message
+            })
+        } finally {
+            console.info('GET /api/v1/app/check-email/:emailAddress: Invocation completed');
+        }
+    }
+);
+
 export default appRouter;

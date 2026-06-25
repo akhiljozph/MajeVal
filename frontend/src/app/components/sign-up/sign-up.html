@@ -36,7 +36,14 @@
 
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email Address</mat-label>
-            <input matInput [formField]="signUpForm.email" placeholder="Email Address">
+            <input matInput [formField]="signUpForm.email" placeholder="Email Address" type="email" (input)="checkEmailAvailability($event)">
+            <!-- @if (emailCheck.isLoading()) {
+            <mat-hint>Checking availability...</mat-hint>
+            }
+
+            @if (emailCheck.value()?.isTaken) {
+            <mat-error>This email is already in use.</mat-error>
+            } -->
         </mat-form-field>
 
         <mat-form-field appearance="outline">

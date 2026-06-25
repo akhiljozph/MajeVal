@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  debounced,
   inject,
   OnInit,
+  resource,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { form, FormField } from '@angular/forms/signals';
 import { DatePipe } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
@@ -87,6 +90,8 @@ export class SignUp implements OnInit {
 
   signUpForm = form(this.signUpModel)
 
+  debouncedEmail = debounced(() => this.signUpForm.email().value(), 400);
+
   constructor(
     private countryService: CountryService,
     private authService: AuthService,
@@ -127,6 +132,36 @@ export class SignUp implements OnInit {
     };
     reader.readAsDataURL(file);
   }
+
+  checkEmailAvailability(event: any): void {
+    const emailAddress = event.target.value;
+    console.log(emailAddress);
+
+    this.authService.checkEmailAvailability(emailAddress).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
+  }
+
+  // emailCheck = resource({
+  //   params: () => {
+  //     const email = this.debouncedEmail.value();
+  //     return email ? { email } : undefined;
+  //   },
+  //   loader: ({ params }) => {
+  //     return firstValueFrom(
+  //       this.authService.checkEmailAvailability().subscribe({
+  //         next: () => {
+
+  //         }
+  //       }))
+  //     );
+  //   }
+  // });
 
   onSubmit(): void {
     let accountData = this.signUpForm().value();
