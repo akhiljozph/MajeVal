@@ -24,6 +24,18 @@ interface IOption {
   viewValue: string;
   code?: string;
 }
+
+interface ISignUpModel {
+  firstName: string,
+  lastName: string,
+  country: string,
+  mobileNumber: string,
+  emailAddress: string,
+  gender: string,
+  dateOfBirth: string,
+  username: string,
+  password: string
+}
 @Component({
   selector: 'maj-sign-up',
   imports: [
@@ -53,19 +65,19 @@ export class SignUp implements OnInit {
     { value: 'OTHER', viewValue: 'Others' },
   ];
 
-  // signUpModel = signal<any>({
-  //   firstName: '',
-  //   lastName: '',
-  //   country: '',
-  //   mobileNumber: '',
-  //   emailAddress: '',
-  //   gender: '',
-  //   dateOfBirth: '',
-  //   username: '',
-  //   password: ''
-  // });
+  signUpModel = signal<ISignUpModel>({
+    firstName: '',
+    lastName: '',
+    country: '',
+    mobileNumber: '',
+    emailAddress: '',
+    gender: '',
+    dateOfBirth: '',
+    username: '',
+    password: ''
+  });
 
-  // signUpForm = form(this.signUpModel)
+  signUpForm = form(this.signUpModel)
 
   constructor(
     private countryService: CountryService
@@ -104,5 +116,9 @@ export class SignUp implements OnInit {
       input.value = '';
     };
     reader.readAsDataURL(file);
+  }
+
+  onSubmit(): void {
+    console.log(this.signUpForm().value());
   }
 }
