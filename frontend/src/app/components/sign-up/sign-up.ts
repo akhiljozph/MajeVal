@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   debounced,
+  effect,
   inject,
   OnInit,
   resource,
@@ -15,7 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { form, FormField } from '@angular/forms/signals';
+import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
 import { DatePipe } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
@@ -88,9 +89,27 @@ export class SignUp implements OnInit {
     "gender": ""
   });
 
-  signUpForm = form(this.signUpModel)
+  signUpForm = form(this.signUpModel, (schema) => {
+    required(schema.email, { message: 'Email is required' });
+    email(schema.email, { message: 'Must be a valid email format' });
+    debounce(schema.email, 500);
+    validateHttp(schema.email, {
+      request: ({ value }) => {
+        const emailStr = value();
 
-  debouncedEmail = debounced(() => this.signUpForm.email().value(), 400);
+        if (!emailStr) return undefined;
+
+        return `app/check-email/${emailStr}`;
+      },
+      onSuccess: (response: { isTaken: boolean }) => {
+        if (response.isTaken) {
+          return { kind: 'emailTaken', message: 'This email is already taken' };
+        }
+        return null;
+      },
+      onError: () => ({ kind: 'serverError', message: 'Could not reach server to verify' })
+    });
+  });
 
   constructor(
     private countryService: CountryService,
@@ -132,36 +151,6 @@ export class SignUp implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-
-  checkEmailAvailability(event: any): void {
-    const emailAddress = event.target.value;
-    console.log(emailAddress);
-
-    this.authService.checkEmailAvailability(emailAddress).subscribe({
-      next: (response: any) => {
-        console.log(response);
-      },
-      error: (err) => {
-        console.error(err.message);
-      }
-    });
-  }
-
-  // emailCheck = resource({
-  //   params: () => {
-  //     const email = this.debouncedEmail.value();
-  //     return email ? { email } : undefined;
-  //   },
-  //   loader: ({ params }) => {
-  //     return firstValueFrom(
-  //       this.authService.checkEmailAvailability().subscribe({
-  //         next: () => {
-
-  //         }
-  //       }))
-  //     );
-  //   }
-  // });
 
   onSubmit(): void {
     let accountData = this.signUpForm().value();
