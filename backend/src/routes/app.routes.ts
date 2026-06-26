@@ -3,7 +3,7 @@ import { Router, type Request, type Response } from "express";
 import AppController from "../controllers/app.controller.ts";
 import { container } from "../di-container.ts";
 import { validate } from "../middlewares/validation.middleware.ts";
-import { countrySchema } from "../schemas/app.schema.ts";
+import { countrySchema, emailQuerySchema } from "../schemas/app.schema.ts";
 
 const appRouter = Router();
 
@@ -55,16 +55,10 @@ appRouter.post('/countries',
 );
 
 appRouter.get('/check-email/:emailAddress',
+    validate(emailQuerySchema),
     async (req: Request, res: Response) => {
         try {
             const { emailAddress } = req.params as { emailAddress: string };
-
-            if (!emailAddress) {
-                res.status(400).json({
-                    "message": "Email address is required!"
-                })
-                return;
-            }
 
             const result = await appController.checkEmailAvailability(emailAddress);
 

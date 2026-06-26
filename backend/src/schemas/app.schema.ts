@@ -7,3 +7,9 @@ export const countrySchema = z.object({
         countryName: z.string('Country name is required')
     })
 });
+
+export const emailQuerySchema = z.object({
+    params: z.object({
+        emailAddress: z.string()
+    })
+});

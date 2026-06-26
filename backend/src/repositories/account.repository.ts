@@ -24,7 +24,7 @@ export default class AccountRepository {
 
     async findAccountByEmail(emailAddress: string) {
         try {
-            return Account.findOne({ email: emailAddress });
+            return Account.exists({ email: emailAddress });
         } catch (error: any) {
             throw error;
         }
