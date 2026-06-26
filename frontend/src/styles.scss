@@ -44,3 +44,8 @@ body {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+.error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}

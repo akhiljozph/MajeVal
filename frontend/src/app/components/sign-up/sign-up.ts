@@ -2,11 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  debounced,
-  effect,
   inject,
   OnInit,
-  resource,
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
 import { DatePipe } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
 
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
@@ -45,6 +41,7 @@ interface ISignUpModel {
   password: string,
   gender: string
 }
+
 @Component({
   selector: 'maj-sign-up',
   imports: [
