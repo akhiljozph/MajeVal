@@ -21,4 +21,12 @@ export default class AccountRepository {
             throw error;
         }
     }
+
+    async findAccountByEmail(emailAddress: string) {
+        try {
+            return Account.exists({ email: emailAddress });
+        } catch (error: any) {
+            throw error;
+        }
+    }
 }

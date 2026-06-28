@@ -3,7 +3,7 @@ import { Router, type Request, type Response } from "express";
 import AppController from "../controllers/app.controller.ts";
 import { container } from "../di-container.ts";
 import { validate } from "../middlewares/validation.middleware.ts";
-import { countrySchema } from "../schemas/app.schema.ts";
+import { countrySchema, emailQuerySchema } from "../schemas/app.schema.ts";
 
 const appRouter = Router();
 
@@ -50,6 +50,28 @@ appRouter.post('/countries',
             })
         } finally {
             console.info('POST /api/v1/app/countries: Invocation completed');
+        }
+    }
+);
+
+appRouter.get('/check-email/:emailAddress',
+    validate(emailQuerySchema),
+    async (req: Request, res: Response) => {
+        try {
+            const { emailAddress } = req.params as { emailAddress: string };
+
+            const result = await appController.checkEmailAvailability(emailAddress);
+
+            res.status(200).json({
+                isTaken: result
+            });
+
+        } catch (error: any) {
+            res.status(400).json({
+                "message": error.message
+            })
+        } finally {
+            console.info('GET /api/v1/app/check-email/:emailAddress: Invocation completed');
         }
     }
 );

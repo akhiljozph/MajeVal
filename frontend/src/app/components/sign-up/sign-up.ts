@@ -13,17 +13,35 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { form, FormField } from '@angular/forms/signals';
+import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
+import { DatePipe } from '@angular/common';
 
 import { IBaseResponse } from '../../core/interfaces/base-response';
 import { ICountry } from '../../core/interfaces/country';
 import { CountryService } from '../../core/services/country';
+import { AuthService } from '../../core/services/auth';
 
 interface IOption {
   value: string;
   viewValue: string;
   code?: string;
 }
+
+interface ISignUpModel {
+  firstName: string,
+  middleName: string,
+  lastName: string,
+  email: string,
+  country: string,
+  mobileNumber: string,
+  profilePicture: string,
+  role: string,
+  dateOfBirth: string,
+  username: string,
+  password: string,
+  gender: string
+}
+
 @Component({
   selector: 'maj-sign-up',
   imports: [
@@ -35,7 +53,7 @@ interface IOption {
     MatButtonModule,
     FormField
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), DatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
@@ -53,22 +71,47 @@ export class SignUp implements OnInit {
     { value: 'OTHER', viewValue: 'Others' },
   ];
 
-  // signUpModel = signal<any>({
-  //   firstName: '',
-  //   lastName: '',
-  //   country: '',
-  //   mobileNumber: '',
-  //   emailAddress: '',
-  //   gender: '',
-  //   dateOfBirth: '',
-  //   username: '',
-  //   password: ''
-  // });
+  signUpModel = signal<ISignUpModel>({
+    "firstName": "",
+    "middleName": "",
+    "lastName": "",
+    "email": "",
+    "country": "",
+    "mobileNumber": "",
+    "profilePicture": "",
+    "role": "EXAMINEE",
+    "dateOfBirth": "",
+    "username": "",
+    "password": "",
+    "gender": ""
+  });
 
-  // signUpForm = form(this.signUpModel)
+  signUpForm = form(this.signUpModel, (schema) => {
+    required(schema.email, { message: 'Email is required' });
+    email(schema.email, { message: 'Must be a valid email format' });
+    debounce(schema.email, 500);
+    validateHttp(schema.email, {
+      request: ({ value }) => {
+        const emailStr = value();
+
+        if (!emailStr) return undefined;
+
+        return `app/check-email/${emailStr}`;
+      },
+      onSuccess: (response: { isTaken: boolean }) => {
+        if (response.isTaken) {
+          return { kind: 'emailTaken', message: 'This email is already taken' };
+        }
+        return null;
+      },
+      onError: () => ({ kind: 'serverError', message: 'Could not reach server to verify' })
+    });
+  });
 
   constructor(
-    private countryService: CountryService
+    private countryService: CountryService,
+    private authService: AuthService,
+    private datePipe: DatePipe
   ) {
 
   }
@@ -87,7 +130,7 @@ export class SignUp implements OnInit {
       error: (err) => {
         console.error(err.message);
       }
-    })
+    });
   }
 
   onFileSelected(event: Event) {
@@ -104,5 +147,22 @@ export class SignUp implements OnInit {
       input.value = '';
     };
     reader.readAsDataURL(file);
+  }
+
+  onSubmit(): void {
+    let accountData = this.signUpForm().value();
+
+    accountData = {
+      ...accountData,
+      dateOfBirth: this.datePipe.transform(accountData.dateOfBirth, 'yyyy-MM-dd') ?? ''
+    }
+    this.authService.accountSignUp(accountData).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
   }
 }

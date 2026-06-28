@@ -29,4 +29,14 @@ export default class AppController {
             throw error;
         }
     }
+
+    async checkEmailAvailability(emailAddress: string) {
+        try {
+            const result = await this.appService.checkEmailAvailability(emailAddress);
+
+            return result ? true : false;
+        } catch (error) {
+            throw error
+        }
+    }
 }

@@ -1,7 +1,13 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { inject } from '@angular/core';
+
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+
+  const snackBar = inject(MatSnackBar);
+
   return next(req).pipe(
     catchError((error: unknown) => {
 
@@ -11,27 +17,45 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
         switch (error.status) {
           case 400:
-            alert(`Validation Failed: ${backendMessage}`);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
 
           case 401:
-            alert(`Session Expired: ${backendMessage}`);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
 
           case 403:
-            alert(`Access Denied: You do not have permission for this action.`);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
 
           case 429:
-            alert(`Too many requests: ${backendMessage}`);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
 
           case 500:
-            alert(`Server Error: ${backendMessage}`);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
 
           default:
-            alert(backendMessage);
+            snackBar.open(backendMessage, 'Close', {
+              duration: 5000,
+              panelClass: ['error-snackbar']
+            });
             break;
         }
       } else {
