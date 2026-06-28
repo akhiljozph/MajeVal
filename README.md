@@ -21,6 +21,7 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
         - Interceptor
     - RxJS
         - `retry()`
+        - `delay()`
 - Backend
     - Express.js
     - Inversify.js
