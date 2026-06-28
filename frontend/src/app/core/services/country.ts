@@ -1,6 +1,6 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry } from 'rxjs';
+import { catchError, delay, Observable, retry } from 'rxjs';
 
 import { IS_PUBLIC_API } from '../interceptors/auth-interceptor';
 import { IBaseResponse } from '../interfaces/base-response';
@@ -20,6 +20,7 @@ export class CountryService {
       context: new HttpContext().set(IS_PUBLIC_API, true)
     }).pipe(
       retry(3),
+      delay(2000),
       catchError(error => {
         console.error('All 3 retries failed:', error);
         throw error;
