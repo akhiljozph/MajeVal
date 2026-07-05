@@ -36,6 +36,7 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
     - Cors
     - Nodemon
     - Opentelemetry
+    - Bcrypt
 - DB
     - MongoDB
     - ODM - Mongoose
