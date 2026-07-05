@@ -40,7 +40,7 @@ export default class MailTransporter {
 
             const emailVariables = {
                 name: name,
-                loginUrl: process.env.FRONTEND_URL || 'http://localhost:1024/login'
+                loginUrl: process.env.CLIENT_URL || 'http://localhost:1024/login'
             };
 
             const finalHtml = this.compileTemplate(rawHtml, emailVariables);

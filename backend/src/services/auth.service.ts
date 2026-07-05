@@ -1,6 +1,7 @@
 // import { z } from 'zod';
 import jwt, { type SignOptions } from 'jsonwebtoken';
 import { inject, injectable } from "inversify";
+import bcrypt from "bcrypt";
 
 import AccountRepository from "../repositories/account.repository.ts";
 // import type { signupSchema } from "../schemas/auth.schema.ts";
@@ -35,8 +36,10 @@ export default class AuthService {
                 throw new Error('Invalid username.');
             }
 
-            if (account?.password !== password) {
-                throw new Error('Incorrect password.')
+            const doesPasswordMatched = await bcrypt.compare(password, account?.password);
+            console.log("doesPasswordMatched", doesPasswordMatched);
+            if (!doesPasswordMatched) {
+                throw new Error('Hmm!, Seems like you forgot your password. Double check it and proceed to login again.')
             }
 
             const tokenPayload = {

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const AccountSchema = new mongoose.Schema({
     firstName: {
@@ -46,6 +47,23 @@ const AccountSchema = new mongoose.Schema({
     role: {
         type: String,
     },
+});
+
+AccountSchema.pre('save', async function () {
+    const user = this;
+
+    if (!user.isModified('password')) {
+        return;
+    }
+
+    try {
+        const saltRounds = Number(process.env.BCRYPT_SALT_ROUNDS) || 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+
+        user.password = await bcrypt.hash(user.password, salt);
+    } catch (error: any) {
+        throw error;
+    }
 });
 
 export default mongoose.model('Account', AccountSchema);
