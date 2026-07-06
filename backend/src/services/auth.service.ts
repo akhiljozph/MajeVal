@@ -10,8 +10,6 @@ import AccountRepository from "../repositories/account.repository.ts";
 @injectable()
 export default class AuthService {
 
-    constructor(@inject(AccountRepository) private accountRepository: AccountRepository) { }
-
     private get tokenExpiresIn() {
         return Number(process.env.JWT_EXPIRES_IN);
     }
@@ -19,6 +17,8 @@ export default class AuthService {
     private get JWTSecret() {
         return process.env.JWT_SECRET;
     }
+
+    constructor(@inject(AccountRepository) private accountRepository: AccountRepository) { }
 
     async addAccount(account: any) {
         try {
@@ -28,33 +28,20 @@ export default class AuthService {
         }
     }
 
-    async verifyAccount(username: string, password: string) {
+    async verifySignIn(username: string, password: string) {
         try {
             const account: any = await this.accountRepository.findAccountByUsername(username);
 
             if (!account) {
-                throw new Error('Invalid username.');
+                throw new Error('Oops!, Check the provided username, we can\'t find it in our records.');
             }
 
-            const doesPasswordMatched = await bcrypt.compare(password, account?.password);
-            console.log("doesPasswordMatched", doesPasswordMatched);
-            if (!doesPasswordMatched) {
-                throw new Error('Hmm!, Seems like you forgot your password. Double check it and proceed to login again.')
-            }
+            await this.verifyCredentials(password, account?.password);
 
-            const tokenPayload = {
-                userId: account._id,
-                role: account.role,
-                email: account.email
-            };
-            const token = jwt.sign(
-                tokenPayload,
-                this.JWTSecret as string, {
-                expiresIn: this.tokenExpiresIn
-            });
+            const accessToken = this.generateAccessToken(account._id, account.role, account.email);
 
             return {
-                token,
+                accessToken,
                 accountInfo: {
                     id: account._id,
                     firstName: account.firstName,
@@ -69,6 +56,36 @@ export default class AuthService {
                     role: account.role,
                 }
             };
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    private async verifyCredentials(payloadPassword: string, password: string) {
+        const doesPasswordMatched = await bcrypt.compare(payloadPassword, password);
+
+        if (!doesPasswordMatched) {
+            throw new Error('Hmm!, Seems like you forgot your password. Double check it and proceed to login again.')
+        }
+    }
+
+    public generateAccessToken(userId: string, role: string, email: string): string {
+        const tokenPayload = {
+            userId,
+            role,
+            email
+        };
+
+        return jwt.sign(
+            tokenPayload,
+            this.JWTSecret as string, {
+            expiresIn: this.tokenExpiresIn
+        });
+    }
+
+    async refreshSession(tokenFromCookie: string) {
+        try {
+            const decoded = jwt.verify(tokenFromCookie, process.env.JWT_REFRESH_SECRET)
         } catch (error) {
             throw error;
         }

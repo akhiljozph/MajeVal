@@ -1,4 +1,6 @@
 import { inject, injectable } from "inversify";
+import { type Request } from "express";
+
 
 import MailTransporter from "../helpers/mail-transporter.ts";
 import AuthService from "../services/auth.service.ts";
@@ -25,11 +27,24 @@ export default class AuthController {
         }
     }
 
-    async verifyAccount(account: any) {
+    async verifySignIn(account: any) {
         try {
             const { username, password } = account;
 
-            return await this.authService.verifyAccount(username, password);
+            return await this.authService.verifySignIn(username, password);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async refreshSession(req: Request) {
+        try {
+            const tokenFromCookie = req.cookies?.refreshToken;
+            if (!tokenFromCookie) {
+                throw new Error('Hey, failed to authenticate you token. You need to login again.');
+            }
+
+            return await this.authService.refreshSession(tokenFromCookie);
         } catch (error) {
             throw error;
         }
