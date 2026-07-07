@@ -40,6 +40,7 @@ export default class AuthController {
     async refreshSession(req: Request) {
         try {
             const tokenFromCookie = req.cookies?.refreshToken;
+ 
             if (!tokenFromCookie) {
                 throw new Error('Hey, failed to authenticate you token. You need to login again.');
             }

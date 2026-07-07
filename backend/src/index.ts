@@ -7,6 +7,7 @@ import express, { type Application } from "express";
 // import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import logger from "morgan";
+import cookieParser from "cookie-parser";
 
 import { initializeConnectionToDatabase } from './configs/database.config.ts';
 import rootRouter from "./routes/index.ts";
@@ -23,6 +24,7 @@ app.use(cors({
 app.use(logger("dev"));
 app.use(express.json({ limit: process.env.PAYLOAD_LIMIT })); // Used for JSON body parsing
 app.use(express.urlencoded({ extended: true, limit: process.env.PAYLOAD_LIMIT })); // Used for URL-encoded body parsing
+app.use(cookieParser());
 // app.use(mongoSanitize()); // To prevent NoSQL injection, but not supported in Express 5.
 
 const PORT = process.env.PORT;

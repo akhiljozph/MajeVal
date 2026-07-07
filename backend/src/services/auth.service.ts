@@ -18,6 +18,14 @@ export default class AuthService {
         return process.env.JWT_SECRET;
     }
 
+    private get JWTRefreshSecret() {
+        return process.env.JWT_REFRESH_SECRET;
+    }
+
+    private get refreshTokenExpiresIn() {
+        return Number(process.env.JWT_REFRESH_EXPIRES_IN);
+    }
+
     constructor(@inject(AccountRepository) private accountRepository: AccountRepository) { }
 
     async addAccount(account: any) {
@@ -39,8 +47,10 @@ export default class AuthService {
             await this.verifyCredentials(password, account?.password);
 
             const accessToken = this.generateAccessToken(account._id, account.role, account.email);
+            const refreshToken = this.generateRefreshToken(account._id, account.role, account.email);
 
             return {
+                refreshToken,
                 accessToken,
                 accountInfo: {
                     id: account._id,
@@ -83,9 +93,23 @@ export default class AuthService {
         });
     }
 
+    public generateRefreshToken(userId: string, role: string, email: string): string {
+        const tokenPayload = {
+            userId,
+            role,
+            email
+        };
+
+        return jwt.sign(tokenPayload, this.JWTRefreshSecret as string, { expiresIn: this.refreshTokenExpiresIn })
+    }
+
     async refreshSession(tokenFromCookie: string) {
         try {
-            const decoded = jwt.verify(tokenFromCookie, process.env.JWT_REFRESH_SECRET)
+            const decoded = jwt.verify(tokenFromCookie, this.JWTRefreshSecret as string) as { userId: string, role: string, email: string };
+
+            const newAccessToken = this.generateAccessToken(decoded.userId, decoded.role, decoded.email);
+
+            return { accessToken: newAccessToken };
         } catch (error) {
             throw error;
         }
