@@ -19,4 +19,8 @@ export class AuthService {
             context: new HttpContext().set(IS_PUBLIC_API, true)
         });
     }
+
+    accountSignIn(accountData: any): Observable<IBaseResponse<any>> {
+        return this.httpService.post<IBaseResponse<any>>('auth/signin', accountData);
+    }
 }

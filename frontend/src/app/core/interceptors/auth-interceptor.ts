@@ -22,7 +22,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   let modifiedReq = req.clone({
     url: fullUrl,
-    setHeaders: headers
+    setHeaders: headers,
+    withCredentials: true
   });
 
   return next(modifiedReq).pipe(
