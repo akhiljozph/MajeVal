@@ -1,12 +1,21 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { inject } from '@angular/core';
 
+import { environment } from '../../../environments/environment.development';
+import { Router } from '@angular/router';
+
+let isRefreshing = false;
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const snackBar = inject(MatSnackBar);
+  const http = inject(HttpClient);
+  const router = inject(Router);
+
+  const baseUrl = environment.baseUrl;
+  const refreshTokenSubject$$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   return next(req).pipe(
     catchError((error: unknown) => {
@@ -24,11 +33,48 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
             break;
 
           case 401:
-            snackBar.open(backendMessage, 'Close', {
-              duration: 5000,
-              panelClass: ['error-snackbar']
-            });
-            break;
+            if (req.url.includes(`${baseUrl}auth/refresh`)) {
+              isRefreshing = false;
+              refreshTokenSubject$$.next(null);
+
+              snackBar.open(backendMessage, 'Close', {
+                duration: 5000,
+                panelClass: ['error-snackbar']
+              });
+            }
+
+            if (!isRefreshing) {
+              isRefreshing = true;
+              refreshTokenSubject$$.next(null);
+
+              return http.post<any>(`${baseUrl}auth/refresh`, {}, { withCredentials: true }).pipe(
+                switchMap((response) => {
+                  const newAccessToken = response.data.accessToken;
+
+                  isRefreshing = false;
+                  refreshTokenSubject$$.next(newAccessToken);
+
+                  return next(req.clone({
+                    setHeaders: { Authorization: `Bearer ${newAccessToken}` }
+                  }));
+                }),
+                catchError((error: any) => {
+                  isRefreshing = false;
+                  router.navigate(['/signin']);
+                  return throwError(() => error);
+                })
+              );
+            } else {
+              return refreshTokenSubject$$.pipe(
+                filter((token) => token !== null),
+                take(1),
+                switchMap((newAccessToken) => {
+                  return next(req.clone({
+                    setHeaders: { Authorization: `Bearer ${newAccessToken}` }
+                  }))
+                })
+              )
+            }
 
           case 403:
             snackBar.open(backendMessage, 'Close', {
