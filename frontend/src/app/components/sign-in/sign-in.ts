@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth';
 
 @Component({
   selector: 'maj-sign-in',
@@ -18,9 +19,18 @@ export class SignIn {
     password: new FormControl(''),
   });
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   onSubmit() {
-    console.warn(this.signInForm.value);
+    this.authService.accountSignIn(this.signInForm.value).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
   }
 }
