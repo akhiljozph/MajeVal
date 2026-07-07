@@ -13,7 +13,7 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
 - Exams (Examinee)
 - Profile (Examiner & Examinee)
 
-## Techincal Stack
+## Technical Stack
 - Frontend
     - Angular (V22.0.0) with SSR & SSG
         - Reactive forms
@@ -37,6 +37,7 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
     - Nodemon
     - Opentelemetry
     - Bcrypt
+    - Cookie-parser
 - DB
     - MongoDB
     - ODM - Mongoose
