@@ -29,7 +29,8 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
             - `switchMap()`
             - `filter()`
             - `take()`
-        - `BehaviorSubject`
+        - Subjects
+            - `BehaviorSubject`
 - Backend
     - Express.js
     - Inversify.js
