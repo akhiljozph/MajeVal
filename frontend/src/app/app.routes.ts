@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { SignIn } from './components/sign-in/sign-in';
 import { Landing } from './components/landing/landing';
+import { PageNotFound } from './components/page-not-found/page-not-found';
 
 export const routes: Routes = [
     {
@@ -24,5 +25,8 @@ export const routes: Routes = [
                 title: 'MajeVal | SignUp'
             }
         ]
+    }, {
+        path: '**',
+        component: PageNotFound
     }
 ];
