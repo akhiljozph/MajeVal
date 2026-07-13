@@ -16,10 +16,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
 import { DatePipe } from '@angular/common';
 
-import { IBaseResponse } from '../../core/interfaces/base-response';
-import { ICountry } from '../../core/interfaces/country';
-import { CountryService } from '../../core/services/country';
-import { AuthService } from '../../core/services/auth';
+import { IBaseResponse } from '../../../core/interfaces/base-response';
+import { ICountry } from '../../../core/interfaces/country';
+import { CountryService } from '../../../core/services/country';
+import { AuthService } from '../../../core/services/auth';
 
 interface IOption {
   value: string;
