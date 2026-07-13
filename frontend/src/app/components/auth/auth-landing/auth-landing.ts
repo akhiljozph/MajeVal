@@ -4,9 +4,9 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'maj-landing',
   imports: [RouterOutlet],
-  templateUrl: './landing.html',
+  templateUrl: './auth-landing.html',
   changeDetection: ChangeDetectionStrategy.Eager,
-  styleUrl: './landing.scss',
+  styleUrl: './auth-landing.scss',
 })
 export class Landing {
   public readonly appTitle = signal('Maj.eVal');
