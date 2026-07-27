@@ -15,11 +15,11 @@ const appController = container.get<AppController>(AppController);
  *   get:
  *     tags:
  *       - App
- *     summary: Retrieve all available country informations
+ *     summary: Retrieve all available countries
  *     description: Returns the full list of countries stored in the system.
  *     responses:
  *       200:
- *         description: A successful response matching the country list array.
+ *         description: Countries retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -31,27 +31,13 @@ const appController = container.get<AppController>(AppController);
  *                 data:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       code:
- *                         type: string
- *                         example: IND
- *                       countryCode:
- *                         type: string
- *                         example: "+91"
- *                       countryName:
- *                         type: string
- *                         example: India
+ *                     $ref: '#/components/schemas/Country'
  *       400:
  *         description: Failed to retrieve countries
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Something went wrong
+ *               $ref: '#/components/schemas/ErrorMessage'
  */
 appRouter.get('/countries',
     async (req: Request, res: Response) => {
@@ -72,6 +58,48 @@ appRouter.get('/countries',
     }
 );
 
+/**
+ * @openapi
+ * /api/v1/app/countries:
+ *   post:
+ *     tags:
+ *       - App
+ *     summary: Add a new country
+ *     description: Creates a country entry. Returns 409 if the country already exists.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Country'
+ *     responses:
+ *       201:
+ *         description: Country created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Created
+ *       400:
+ *         description: Invalid request or creation failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ *       409:
+ *         description: Country already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Country exists!
+ */
 appRouter.post('/countries',
     validate(countrySchema),
     async (req: Request, res: Response) => {
@@ -98,6 +126,40 @@ appRouter.post('/countries',
     }
 );
 
+/**
+ * @openapi
+ * /api/v1/app/check-email/{emailAddress}:
+ *   get:
+ *     tags:
+ *       - App
+ *     summary: Check email availability
+ *     description: Returns whether the given email address is already taken.
+ *     parameters:
+ *       - in: path
+ *         name: emailAddress
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: email
+ *         example: jane@example.com
+ *     responses:
+ *       200:
+ *         description: Email availability checked successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 isTaken:
+ *                   type: boolean
+ *                   example: false
+ *       400:
+ *         description: Failed to check email availability
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorMessage'
+ */
 appRouter.get('/check-email/:emailAddress',
     validate(emailQuerySchema),
     async (req: Request, res: Response) => {
