@@ -9,6 +9,50 @@ const appRouter = Router();
 
 const appController = container.get<AppController>(AppController);
 
+/**
+ * @openapi
+ * /api/v1/app/countries:
+ *   get:
+ *     tags:
+ *       - App
+ *     summary: Retrieve all available country informations
+ *     description: Returns the full list of countries stored in the system.
+ *     responses:
+ *       200:
+ *         description: A successful response matching the country list array.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Success
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       code:
+ *                         type: string
+ *                         example: IND
+ *                       countryCode:
+ *                         type: string
+ *                         example: "+91"
+ *                       countryName:
+ *                         type: string
+ *                         example: India
+ *       400:
+ *         description: Failed to retrieve countries
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Something went wrong
+ */
 appRouter.get('/countries',
     async (req: Request, res: Response) => {
         try {
