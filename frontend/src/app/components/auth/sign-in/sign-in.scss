@@ -1,0 +1,35 @@
+.sign-in-wrapper {
+    font-family: "Crimson Pro", "Roboto";
+    box-shadow: rgba(0, 0, 0, 0.35) 0em 0.25em 1em;
+    padding: 1em;
+    border-radius: 0.5em;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25em;
+    height: 32em;
+    background-color: aliceblue;
+
+    .sign-in-title {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+    }
+
+    .sign-in-form {
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+
+        mat-icon {
+            cursor: pointer;
+        }
+
+        .sign-in-btn {
+            margin-bottom: 0.75em;
+            border-radius: 0.5em;
+            background-color: #784eca;
+            color: #fff;
+        }
+    }
+}

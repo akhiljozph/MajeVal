@@ -1,17 +1,23 @@
-<section>
-    <h2>Sign In</h2>
+<section class="sign-in-wrapper">
+    <h2 class="sign-in-title">Sign In</h2>
 
-    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-        <div>
-            Username
-            <input formControlName="username" />
-        </div>
-        <div>
-            Password
-            <input type="password" formControlName="password" />
-        </div>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="sign-in-form">
 
-        <button type="submit">Sign In</button>
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="password"
+                type="{{hidePassword() ? 'password' : 'text'}}">
+            <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility($event)">
+                <mat-icon>{{hidePassword() ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <button matButton="elevated" type="submit" class="sign-in-btn">Sign In</button>
     </form>
-    New to MajeVal? Create an account <a routerLink="/sign-up">here.</a>
+    <p>New to MajeVal? Create an account <a routerLink="/sign-up">here.</a></p>
 </section>
