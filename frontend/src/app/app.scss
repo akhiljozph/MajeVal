@@ -8,5 +8,22 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        box-sizing: border-box;
+        padding: clamp(0.75em, 2vh, 3em) clamp(0.5em, 2vw, 3em);
+        overflow-y: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 40em) {
+    :host .maj-root {
+        justify-content: flex-start;
+        padding: 0.75em 0.5em 1.5em;
+    }
+}
+
+@media (min-width: 160em) {
+    :host .maj-root {
+        padding: clamp(2em, 4vh, 5em) clamp(2em, 4vw, 6em);
     }
 }

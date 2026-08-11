@@ -7,10 +7,12 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
@@ -45,12 +47,14 @@ interface ISignUpModel {
 @Component({
   selector: 'maj-sign-up',
   imports: [
+    RouterLink,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
     FormsModule,
     MatDatepickerModule,
     MatButtonModule,
+    MatIconModule,
     FormField
   ],
   providers: [provideNativeDateAdapter(), DatePipe],
@@ -62,6 +66,8 @@ export class SignUp implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
 
   imagePreview: string | null = null;
+
+  hidePassword = signal(true);
 
   countries: IOption[] = [];
 
@@ -131,6 +137,10 @@ export class SignUp implements OnInit {
         console.error(err.message);
       }
     });
+  }
+
+  togglePasswordVisibility(event: any) {
+    this.hidePassword.set(!this.hidePassword());
   }
 
   onFileSelected(event: Event) {
