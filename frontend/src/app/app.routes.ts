@@ -4,6 +4,7 @@ import { SignIn } from './components/auth/sign-in/sign-in';
 import { Landing } from './components/auth/auth-landing/auth-landing';
 import { PageNotFound } from './components/error-pages/page-not-found/page-not-found';
 import { MainLayout } from './shared/components/main-layout/main-layout';
+import { DashboardLanding } from './components/dashboard/dashboard-landing/dashboard-landing';
 
 export const routes: Routes = [
     {
@@ -29,7 +30,12 @@ export const routes: Routes = [
     }, {
         path: 'app',
         component: MainLayout,
-        children: []
+        children: [
+            {
+                path: 'dashboard',
+                component: DashboardLanding
+            }
+        ]
     }, {
         path: '**',
         component: PageNotFound
