@@ -32,8 +32,14 @@ export const routes: Routes = [
         component: MainLayout,
         children: [
             {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full'
+            },
+            {
                 path: 'dashboard',
-                component: DashboardLanding
+                component: DashboardLanding,
+                title: 'MajeVal | Dashboard'
             }
         ]
     }, {
