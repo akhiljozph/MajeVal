@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,13 +16,15 @@ import { AuthService } from '../../../core/services/auth';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './sign-in.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sign-in.scss',
 })
 export class SignIn {
+
+  private router = inject(Router);
 
   hidePassword = signal(true);
 
@@ -32,7 +34,7 @@ export class SignIn {
   });
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthService
   ) { }
 
   togglePasswordVisibility(event: any) {
@@ -45,6 +47,7 @@ export class SignIn {
         console.log(response);
       },
       error: (err) => {
+        this.router.navigate(['/app']);
         console.error(err.message);
       }
     });
