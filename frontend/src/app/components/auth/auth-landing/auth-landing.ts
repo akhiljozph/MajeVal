@@ -10,5 +10,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class Landing {
   public readonly appTitle = signal('Maj.eVal');
-  public readonly appTagLine = signal('Bridging the Gap Between Question and Mastery.');
+  public readonly appTagLine = signal('Bridging the Gap Between Knowledge and Mastery.');
 }

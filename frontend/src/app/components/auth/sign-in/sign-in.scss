@@ -9,7 +9,7 @@
     align-items: center;
     width: min(25em, 100%);
     min-height: clamp(24em, 40vh, 36em);
-    background-color: aliceblue;
+    background-color: #F8F6FA;
     box-sizing: border-box;
     font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1.35rem);
 
@@ -17,6 +17,7 @@
         font-size: clamp(2em, 1.5em + 1.5vw, 3.25em);
         margin-bottom: 0.5em;
         text-align: center;
+        color: #1A1A1A;
     }
 
     .sign-in-form {
@@ -30,7 +31,7 @@
         .sign-in-btn {
             margin-bottom: 0.75em;
             border-radius: 0.5em;
-            background-color: #784eca;
+            background-color: #C2185B;
             color: #fff;
             font-size: 1em;
             padding: 0.35em 1em;
