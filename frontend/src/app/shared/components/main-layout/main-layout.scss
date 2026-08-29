@@ -1,3 +1,10 @@
-.layout-body {
+.main-layout {
     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .layout-body {
+        display: flex;
+        gap: 0.5rem;
+    }
 }
