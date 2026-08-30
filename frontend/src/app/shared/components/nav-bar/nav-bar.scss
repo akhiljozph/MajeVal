@@ -1,5 +1,21 @@
 :host {
     display: block;
     flex: 0 0 4rem;
-    height: 4rem;
+    height: 3rem;
+    align-content: center;
+}
+
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .navbar-actions-wrapper {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        mat-icon {
+            cursor: pointer;
+        }
+    }
 }
