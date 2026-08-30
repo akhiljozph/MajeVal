@@ -3,8 +3,8 @@ import { Routes } from '@angular/router';
 import { SignIn } from './components/auth/sign-in/sign-in';
 import { Landing } from './components/auth/auth-landing/auth-landing';
 import { PageNotFound } from './components/error-pages/page-not-found/page-not-found';
-import { MainLayout } from './shared/components/main-layout/main-layout';
 import { DashboardLanding } from './components/dashboard/dashboard-landing/dashboard-landing';
+import { LayoutContainer } from './shared/components/layout-container/layout-container';
 
 export const routes: Routes = [
     {
@@ -29,7 +29,7 @@ export const routes: Routes = [
         ]
     }, {
         path: 'app',
-        component: MainLayout,
+        component: LayoutContainer,
         children: [
             {
                 path: '',
