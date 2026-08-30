@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-
-import { NavBar } from '../nav-bar/nav-bar';
-import { SideBar } from '../side-bar/side-bar';
-import { LayoutContainer } from '../layout-container/layout-container';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'maj-main-layout',
   imports: [
-    NavBar,
-    SideBar,
-    LayoutContainer
+    RouterOutlet
   ],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
