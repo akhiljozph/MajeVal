@@ -1,12 +1,38 @@
+:host {
+    display: block;
+    height: 100%;
+    min-height: 0;
+}
+
 .layout-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    height: inherit;
+    height: 100%;
+    min-height: 0;
+
+    .nav-bar {
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        border-radius: 0.5rem;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .side-bar {
+        box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        border-radius: 0.5rem;
+    }
 
     .layout-body {
+        flex: 1 1 auto;
+        min-height: 0;
         gap: 0.5rem;
         display: grid;
         grid-template-columns: 250px 1fr;
+
+        .content {
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            border-radius: 0.5rem;
+        }
     }
 }
