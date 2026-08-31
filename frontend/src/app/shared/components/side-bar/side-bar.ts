@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'maj-side-bar',
@@ -6,4 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './side-bar.html',
   styleUrl: './side-bar.scss',
 })
-export class SideBar {}
+export class SideBar {
+
+  private router = inject(Router);
+
+  onClick(route: string) {
+    this.router.navigate([`/app/${route}`]);
+  }
+}
