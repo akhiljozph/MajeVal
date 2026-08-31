@@ -6,7 +6,7 @@ import { ConfirmationModalService } from '../../services/confirmation-modal';
 @Component({
   selector: 'maj-confirmation-modal',
   imports: [
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './confirmation-modal.html',
   styleUrl: './confirmation-modal.scss',
