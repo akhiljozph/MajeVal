@@ -1,0 +1,15 @@
+<div *ngIf="modalService.config$ | async as config" class="modal-overlay">
+    <div class="modal-card" [ngClass]="config.type">
+        <h3>{{ config.title }}</h3>
+        <p>{{ config.message }}</p>
+
+        <div class="modal-actions">
+            <button class="btn-cancel" (click)="modalService.cancel()">
+                {{ config.cancelText }}
+            </button>
+            <button class="btn-confirm" (click)="modalService.confirm()">
+                {{ config.confirmText }}
+            </button>
+        </div>
+    </div>
+</div>
