@@ -6,7 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { AuthService } from '../../../core/services/auth';
+import { AuthService } from '@core/services/auth';
+import { AuthStateService } from '@core/services/auth-state';
 
 @Component({
   selector: 'maj-sign-in',
@@ -25,6 +26,8 @@ import { AuthService } from '../../../core/services/auth';
 export class SignIn {
 
   private router = inject(Router);
+  private authService = inject(AuthService);
+  private authState = inject(AuthStateService);
 
   hidePassword = signal(true);
 
@@ -33,23 +36,19 @@ export class SignIn {
     password: new FormControl(''),
   });
 
-  constructor(
-    private authService: AuthService
-  ) { }
-
-  togglePasswordVisibility(event: any) {
+  togglePasswordVisibility(event: Event) {
     this.hidePassword.set(!this.hidePassword());
   }
 
   onSubmit() {
     this.authService.accountSignIn(this.signInForm.value).subscribe({
-      next: (response: any) => {
-        console.log(response);
+      next: () => {
+        this.authState.setAuthenticated(true);
+        this.router.navigate(['/app']);
       },
       error: (err) => {
-        this.router.navigate(['/app']);
         console.error(err.message);
-      }
+      },
     });
   }
 }

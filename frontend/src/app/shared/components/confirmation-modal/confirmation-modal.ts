@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
-import { ConfirmationModalService } from '../../services/confirmation-modal';
+import { ConfirmationModalService } from '@shared/services/confirmation-modal';
 
 @Component({
   selector: 'maj-confirmation-modal',

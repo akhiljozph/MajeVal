@@ -1,9 +1,8 @@
-import { HttpContextToken, HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 
-import { environment } from '../../../environments/environment.development';
-
-export const IS_PUBLIC_API = new HttpContextToken<boolean>(() => false);
+import { IS_PUBLIC_API } from '@core/tokens/http-context.tokens';
+import { environment } from '@env/environment';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const baseUrl = environment.baseUrl;

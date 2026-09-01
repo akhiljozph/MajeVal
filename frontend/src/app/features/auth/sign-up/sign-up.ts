@@ -18,31 +18,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { debounce, email, form, FormField, required, validateHttp } from '@angular/forms/signals';
 import { DatePipe } from '@angular/common';
 
-import { IBaseResponse } from '../../../core/interfaces/base-response';
-import { ICountry } from '../../../core/interfaces/country';
-import { CountryService } from '../../../core/services/country';
-import { AuthService } from '../../../core/services/auth';
-
-interface IOption {
-  value: string;
-  viewValue: string;
-  code?: string;
-}
-
-interface ISignUpModel {
-  firstName: string,
-  middleName: string,
-  lastName: string,
-  email: string,
-  country: string,
-  mobileNumber: string,
-  profilePicture: string,
-  role: string,
-  dateOfBirth: string,
-  username: string,
-  password: string,
-  gender: string
-}
+import { IBaseResponse } from '@core/interfaces/base-response';
+import { ICountry } from '@core/interfaces/country';
+import { CountryService } from '@core/services/country';
+import { AuthService } from '@core/services/auth';
+import { IOption, ISignUpModel } from '@features/auth/models/sign-up.model';
 
 @Component({
   selector: 'maj-sign-up',

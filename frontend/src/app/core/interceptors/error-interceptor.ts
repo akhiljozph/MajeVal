@@ -3,7 +3,7 @@ import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { inject } from '@angular/core';
 
-import { environment } from '../../../environments/environment.development';
+import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 
 let isRefreshing = false;
@@ -60,7 +60,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
                 }),
                 catchError((error: any) => {
                   isRefreshing = false;
-                  router.navigate(['/signin']);
+                  router.navigate(['/sign-in']);
                   return throwError(() => error);
                 })
               );
