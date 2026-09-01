@@ -2,8 +2,8 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpContext } from '@angular/common/http';
 
-import { IBaseResponse } from '../interfaces/base-response';
-import { IS_PUBLIC_API } from '../interceptors/auth-interceptor';
+import { IBaseResponse } from '@core/interfaces/base-response';
+import { IS_PUBLIC_API } from '@core/tokens/http-context.tokens';
 
 @Service()
 export class AuthService {

@@ -2,9 +2,9 @@ import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, delay, Observable, retry } from 'rxjs';
 
-import { IS_PUBLIC_API } from '../interceptors/auth-interceptor';
-import { IBaseResponse } from '../interfaces/base-response';
-import { ICountry } from '../interfaces/country';
+import { IS_PUBLIC_API } from '@core/tokens/http-context.tokens';
+import { IBaseResponse } from '@core/interfaces/base-response';
+import { ICountry } from '@core/interfaces/country';
 
 @Injectable({
   providedIn: 'root',

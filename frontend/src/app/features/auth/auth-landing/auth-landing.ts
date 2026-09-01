@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './auth-landing.scss',
 })
-export class Landing {
+export class AuthLanding {
   public readonly appTitle = signal('Maj.eVal');
   public readonly appTagLine = signal('Bridging the Gap Between Knowledge and Mastery.');
 }
