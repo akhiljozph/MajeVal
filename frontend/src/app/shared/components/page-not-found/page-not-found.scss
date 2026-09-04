@@ -1,3 +1,10 @@
+:host {
+    display: block;
+    height: 100%;
+    box-sizing: border-box;
+    padding: clamp(0.75em, 2vh, 3em) clamp(0.5em, 2vw, 3em);
+}
+
 .pnf-wrapper {
     height: 100%;
     display: flex;

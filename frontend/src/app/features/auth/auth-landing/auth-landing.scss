@@ -1,60 +1,295 @@
+:host {
+    display: block;
+    height: 100%;
+    min-height: 0;
+}
+
 .landing-wrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
     box-sizing: border-box;
     width: 100%;
-    max-width: 100%;
-    padding: clamp(0.75em, 2vw, 3em);
-    overflow-x: hidden;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(194, 24, 91, 0.22), transparent 55%),
+        radial-gradient(ellipse 70% 50% at 80% 80%, rgba(120, 78, 202, 0.18), transparent 50%),
+        linear-gradient(160deg, #0f172a 0%, #1a2236 55%, #0f172a 100%);
 
-    .app-title {
-        font-family: "Lobster Two", sans-serif;
-        font-size: clamp(2.5rem, 2rem + 4vw, 7rem);
-        color: #ffffff;
-        text-align: center;
-        line-height: 1.1;
-    }
-
-    .app-tag-line {
-        font-family: "Lobster Two", sans-serif;
-        font-size: clamp(0.95rem, 0.85rem + 0.8vw, 2rem);
-        color: #C2185B;
-        margin-bottom: clamp(1.25em, 3vh, 3em);
-        text-align: center;
-        padding: 0 0.5em;
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 2.5rem 2.5rem;
+        mask-image: radial-gradient(ellipse 70% 70% at 40% 50%, black 20%, transparent 75%);
+        pointer-events: none;
+        z-index: 0;
     }
 }
 
-/* Mobile */
+.brand-panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vw, 4rem);
+    overflow: hidden;
+    background: transparent;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 1;
+    max-width: 22em;
+    animation: brand-rise 0.7s ease-out both;
+}
+
+.brand-eyebrow {
+    font-family: "Crimson Pro", "Roboto", serif;
+    font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.95rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(232, 90, 140, 0.9);
+    margin-bottom: 0.75rem;
+}
+
+.app-title {
+    font-family: "Lobster Two", sans-serif;
+    font-size: clamp(3rem, 2.5rem + 3.5vw, 6.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+}
+
+.app-tag-line {
+    font-family: "Lobster Two", sans-serif;
+    font-size: clamp(1rem, 0.9rem + 0.6vw, 1.65rem);
+    color: #e85a8c;
+    margin-top: clamp(0.75rem, 1.5vh, 1.25rem);
+    line-height: 1.35;
+    text-wrap: pretty;
+    max-width: 24ch;
+    animation: brand-rise 0.7s ease-out 0.12s both;
+}
+
+.brand-copy {
+    margin-top: clamp(1.5rem, 3vh, 2.25rem);
+    animation: brand-rise 0.7s ease-out 0.18s both;
+}
+
+.brand-heading {
+    font-family: "Crimson Pro", "Roboto", serif;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
+    font-weight: 600;
+    color: #f8fafc;
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+}
+
+.brand-description {
+    font-family: "Crimson Pro", "Roboto", serif;
+    font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.1rem);
+    color: rgba(226, 232, 240, 0.82);
+    line-height: 1.55;
+    max-width: 34ch;
+}
+
+.brand-highlights {
+    list-style: none;
+    margin-top: clamp(1.5rem, 3vh, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: brand-rise 0.7s ease-out 0.26s both;
+
+    li {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.85rem;
+        align-items: flex-start;
+    }
+}
+
+.highlight-mark {
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-top: 0.4rem;
+    border-radius: 50%;
+    background: #e85a8c;
+    box-shadow: 0 0 0 0.3rem rgba(232, 90, 140, 0.18);
+    flex-shrink: 0;
+}
+
+.highlight-title {
+    font-family: "Crimson Pro", "Roboto", serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 0.2rem;
+}
+
+.highlight-detail {
+    font-family: "Crimson Pro", "Roboto", serif;
+    font-size: 0.92rem;
+    color: rgba(203, 213, 225, 0.85);
+    line-height: 1.45;
+}
+
+.auth-panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: safe center;
+    justify-content: center;
+    min-height: 0;
+    height: 100%;
+    padding: clamp(1rem, 3vh, 2.5rem) clamp(1rem, 3vw, 3rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: transparent;
+    animation: panel-fade 0.55s ease-out 0.08s both;
+}
+
+@keyframes brand-rise {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes panel-fade {
+    from {
+        opacity: 0;
+        transform: translateX(0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Tablet — keep split, tighten brand */
+@media (max-width: 64em) and (min-width: 40.01em) {
+    .brand-panel {
+        padding: clamp(1rem, 3vw, 2rem);
+    }
+
+    .brand-content {
+        max-width: 16em;
+    }
+
+    .app-title {
+        font-size: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+    }
+
+    .brand-highlights {
+        gap: 0.75rem;
+    }
+}
+
+/* Mobile — brand on top, form below */
 @media (max-width: 40em) {
     .landing-wrapper {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
+    }
+
+    .landing-wrapper::before {
+        mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    }
+
+    .brand-panel {
+        align-items: flex-end;
         justify-content: flex-start;
-        min-height: 100%;
+        min-height: auto;
+        flex-shrink: 0;
+        padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) 1rem;
+    }
+
+    .brand-content {
+        max-width: none;
+        animation: brand-rise 0.55s ease-out both;
+    }
+
+    .app-title {
+        font-size: clamp(2.25rem, 1.75rem + 4vw, 3.25rem);
+    }
+
+    .app-tag-line {
+        font-size: clamp(0.95rem, 0.85rem + 0.8vw, 1.15rem);
+        max-width: 28ch;
+        margin-top: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .brand-copy {
+        margin-top: 1rem;
+    }
+
+    .brand-highlights {
+        display: none;
+    }
+
+    .auth-panel {
+        align-items: flex-start;
+        min-height: 0;
+        padding: 1rem 0.75rem 1.5rem;
+        animation: panel-fade 0.5s ease-out 0.06s both;
     }
 }
 
 /* Large desktop / QHD */
 @media (min-width: 90em) {
-    .landing-wrapper {
-        .app-title {
-            letter-spacing: 0.01em;
-        }
+    .brand-content {
+        max-width: 24em;
+    }
+
+    .app-title {
+        letter-spacing: 0.015em;
     }
 }
 
 /* 4K and ultrawide */
 @media (min-width: 160em) {
-    .landing-wrapper {
-        padding: clamp(2em, 4vh, 5em);
+    .brand-panel {
+        padding: clamp(2em, 5vw, 6em);
+    }
 
-        .app-title {
-            font-size: clamp(5rem, 3rem + 3vw, 8.5rem);
-        }
+    .app-title {
+        font-size: clamp(5rem, 3rem + 3vw, 8rem);
+    }
 
-        .app-tag-line {
-            font-size: clamp(1.5rem, 1rem + 1vw, 2.5rem);
-            margin-bottom: 3.5em;
-        }
+    .app-tag-line {
+        font-size: clamp(1.35rem, 1rem + 0.8vw, 2.25rem);
+    }
+
+    .auth-panel {
+        padding: clamp(2em, 4vh, 4em) clamp(2em, 4vw, 5em);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .brand-content,
+    .app-tag-line,
+    .brand-copy,
+    .brand-highlights,
+    .auth-panel {
+        animation: none;
     }
 }
