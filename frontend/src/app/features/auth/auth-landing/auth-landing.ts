@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
   selector: 'maj-landing',
   imports: [RouterOutlet],
   templateUrl: './auth-landing.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './auth-landing.scss',
 })
 export class AuthLanding {
