@@ -1,6 +1,5 @@
 <section class="sign-up-wrapper">
     <header class="auth-header">
-        <p class="auth-eyebrow">Join MajeVal</p>
         <h2 class="sign-up-title">Create your account</h2>
         <p class="auth-subtitle">
             Tell us a little about yourself so we can personalize assessments and track your growth.
@@ -9,19 +8,9 @@
 
     <form (ngSubmit)="onSubmit()" class="sign-up-form">
         <p class="form-section-label full-width">Profile &amp; identity</p>
-
-        <label class="profile-section" for="profileUpload">
-            @if (!imagePreview) {
-            <mat-icon aria-hidden="true">add_a_photo</mat-icon>
-            <span class="profile-title">Add a photo</span>
-            <span class="profile-hint">Optional · JPG or PNG</span>
-            }
-            @if (imagePreview) {
-            <img [src]="imagePreview" alt="Profile preview">
-            <span class="profile-change">Change photo</span>
-            }
-            <input type="file" hidden id="profileUpload" accept="image/*" (change)="onFileSelected($event)">
-        </label>
+        <p class="section-help full-width">
+            Provide your name and email address.
+        </p>
 
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
@@ -32,45 +21,10 @@
             <input matInput [formField]="signUpForm.lastName" placeholder="Last name" autocomplete="family-name">
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Country</mat-label>
-            <mat-select [formField]="signUpForm.country">
-                @for (country of countries; track country?.code) {
-                <mat-option [value]="country.value">{{country?.viewValue}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Mobile Number</mat-label>
-            <input matInput [formField]="signUpForm.mobileNumber" placeholder="Mobile number" autocomplete="tel">
-        </mat-form-field>
-
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email Address</mat-label>
             <input matInput [formField]="signUpForm.email" placeholder="you@example.com" type="email"
                 autocomplete="email">
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Gender</mat-label>
-            <mat-select [formField]="signUpForm.gender">
-                @for (gender of genders; track gender) {
-                <mat-option [value]="gender.value">{{gender?.viewValue}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Date Of Birth</mat-label>
-            <input matInput [formField]="signUpForm.dateOfBirth" [matDatepicker]="datepicker" />
-            <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-            <mat-datepicker #datepicker>
-                <mat-datepicker-actions>
-                    <button matButton matDatepickerCancel>Cancel</button>
-                    <button matButton="elevated" matDatepickerApply>Apply</button>
-                </mat-datepicker-actions>
-            </mat-datepicker>
         </mat-form-field>
 
         <p class="form-section-label full-width">Account access</p>

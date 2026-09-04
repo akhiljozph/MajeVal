@@ -148,11 +148,13 @@
     position: relative;
     z-index: 1;
     display: flex;
-    align-items: center;
+    align-items: safe center;
     justify-content: center;
+    min-height: 0;
+    height: 100%;
     padding: clamp(1rem, 3vh, 2.5rem) clamp(1rem, 3vw, 3rem);
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     background: transparent;
     animation: panel-fade 0.55s ease-out 0.08s both;
 }
@@ -204,9 +206,8 @@
 @media (max-width: 40em) {
     .landing-wrapper {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
-        overflow-y: auto;
-        overflow-x: hidden;
+        grid-template-rows: auto minmax(0, 1fr);
+        overflow: hidden;
     }
 
     .landing-wrapper::before {
@@ -217,6 +218,7 @@
         align-items: flex-end;
         justify-content: flex-start;
         min-height: auto;
+        flex-shrink: 0;
         padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) 1rem;
     }
 
@@ -246,6 +248,7 @@
 
     .auth-panel {
         align-items: flex-start;
+        min-height: 0;
         padding: 1rem 0.75rem 1.5rem;
         animation: panel-fade 0.5s ease-out 0.06s both;
     }
