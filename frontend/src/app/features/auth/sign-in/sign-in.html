@@ -1,23 +1,54 @@
 <section class="sign-in-wrapper">
-    <h2 class="sign-in-title">Sign In</h2>
+    <header class="auth-header">
+        <p class="auth-eyebrow">Welcome back</p>
+        <h2 class="sign-in-title">Sign In</h2>
+        <p class="auth-subtitle">
+            Enter your credentials to continue to your exams, insights, and learning path.
+        </p>
+    </header>
 
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="sign-in-form">
-
         <mat-form-field appearance="outline">
             <mat-label>Username</mat-label>
-            <input matInput placeholder="Placeholder" formControlName="username">
+            <input matInput placeholder="e.g. alex.learner" formControlName="username" autocomplete="username">
+            <mat-icon matPrefix>person_outline</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="Placeholder" formControlName="password"
-                type="{{hidePassword() ? 'password' : 'text'}}">
-            <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility($event)">
+            <input matInput placeholder="Enter your password" formControlName="password"
+                type="{{hidePassword() ? 'password' : 'text'}}" autocomplete="current-password">
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility($event)"
+                [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'">
                 <mat-icon>{{hidePassword() ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
         </mat-form-field>
 
+        <div class="form-meta">
+            <p class="meta-hint">Use the username you created during registration.</p>
+        </div>
+
         <button matButton="elevated" type="submit" class="sign-in-btn">Sign In</button>
     </form>
-    <p>New to MajeVal? Create an account <a routerLink="/sign-up">here.</a></p>
+
+    <div class="auth-divider" role="presentation">
+        <span>New here?</span>
+    </div>
+
+    <p class="auth-switch">
+        Create a free MajeVal account
+        <a routerLink="/sign-up">Sign up</a>
+    </p>
+
+    <ul class="auth-notes">
+        <li>
+            <mat-icon aria-hidden="true">verified_user</mat-icon>
+            <span>Your sessions stay private to your account.</span>
+        </li>
+        <li>
+            <mat-icon aria-hidden="true">insights</mat-icon>
+            <span>Progress and exam history sync after you sign in.</span>
+        </li>
+    </ul>
 </section>

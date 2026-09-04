@@ -1,25 +1,35 @@
 <section class="sign-up-wrapper">
-    <h2 class="sign-up-title">Sign Up</h2>
+    <header class="auth-header">
+        <p class="auth-eyebrow">Join MajeVal</p>
+        <h2 class="sign-up-title">Create your account</h2>
+        <p class="auth-subtitle">
+            Tell us a little about yourself so we can personalize assessments and track your growth.
+        </p>
+    </header>
 
     <form (ngSubmit)="onSubmit()" class="sign-up-form">
+        <p class="form-section-label full-width">Profile &amp; identity</p>
 
         <label class="profile-section" for="profileUpload">
             @if (!imagePreview) {
-            <span>Profile Picture</span>
+            <mat-icon aria-hidden="true">add_a_photo</mat-icon>
+            <span class="profile-title">Add a photo</span>
+            <span class="profile-hint">Optional · JPG or PNG</span>
             }
             @if (imagePreview) {
             <img [src]="imagePreview" alt="Profile preview">
+            <span class="profile-change">Change photo</span>
             }
             <input type="file" hidden id="profileUpload" accept="image/*" (change)="onFileSelected($event)">
         </label>
 
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
-            <input matInput [formField]="signUpForm.firstName" placeholder="First Name">
+            <input matInput [formField]="signUpForm.firstName" placeholder="First name" autocomplete="given-name">
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
-            <input matInput [formField]="signUpForm.lastName" placeholder="Last Name">
+            <input matInput [formField]="signUpForm.lastName" placeholder="Last name" autocomplete="family-name">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -33,19 +43,13 @@
 
         <mat-form-field appearance="outline">
             <mat-label>Mobile Number</mat-label>
-            <input matInput [formField]="signUpForm.mobileNumber" placeholder="Mobile Number">
+            <input matInput [formField]="signUpForm.mobileNumber" placeholder="Mobile number" autocomplete="tel">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email Address</mat-label>
-            <input matInput [formField]="signUpForm.email" placeholder="Email Address" type="email">
-            <!-- @if (emailCheck.isLoading()) {
-            <mat-hint>Checking availability...</mat-hint>
-            }
-
-            @if (emailCheck.value()?.isTaken) {
-            <mat-error>This email is already in use.</mat-error>
-            } -->
+            <input matInput [formField]="signUpForm.email" placeholder="you@example.com" type="email"
+                autocomplete="email">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -69,21 +73,36 @@
             </mat-datepicker>
         </mat-form-field>
 
+        <p class="form-section-label full-width">Account access</p>
+        <p class="section-help full-width">
+            Choose a username and password you will use each time you sign in.
+        </p>
+
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Username</mat-label>
-            <input matInput [formField]="signUpForm.username" placeholder="Username">
+            <input matInput [formField]="signUpForm.username" placeholder="Choose a unique username"
+                autocomplete="username">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput [formField]="signUpForm.password" placeholder="Password"
-                type="{{hidePassword() ? 'password' : 'text'}}">
-            <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility($event)">
+            <input matInput [formField]="signUpForm.password" placeholder="Create a strong password"
+                type="{{hidePassword() ? 'password' : 'text'}}" autocomplete="new-password">
+            <button type="button" mat-icon-button matSuffix (click)="togglePasswordVisibility($event)"
+                [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'">
                 <mat-icon>{{hidePassword() ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
+            <mat-hint>Use at least 8 characters with a mix of letters and numbers.</mat-hint>
         </mat-form-field>
 
-        <button matButton="elevated" type="submit" class="sign-up-btn full-width">Sign Up</button>
-
+        <button matButton="elevated" type="submit" class="sign-up-btn full-width">Create Account</button>
     </form>
-    <p>Already have an account? Sign in <a routerLink="/sign-in">here.</a></p>
+
+    <div class="auth-divider" role="presentation">
+        <span>Already registered?</span>
+    </div>
+
+    <p class="auth-switch">
+        Sign in to your existing account
+        <a routerLink="/sign-in">Sign in</a>
+    </p>
 </section>

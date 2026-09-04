@@ -1,8 +1,26 @@
 <section class="landing-wrapper">
     <aside class="brand-panel" aria-label="MajeVal branding">
         <div class="brand-content">
-            <h1 class="app-title">{{ appTitle() }}</h1>
-            <p class="app-tag-line">{{ appTagLine() }}</p>
+            <p class="brand-eyebrow">{{ isSignUp() ? 'Create account' : 'Member access' }}</p>
+            <h1 class="app-title">{{ appTitle }}</h1>
+            <p class="app-tag-line">{{ appTagLine }}</p>
+
+            <div class="brand-copy">
+                <h2 class="brand-heading">{{ brandHeading() }}</h2>
+                <p class="brand-description">{{ brandDescription() }}</p>
+            </div>
+
+            <ul class="brand-highlights">
+                @for (item of highlights(); track item.title) {
+                <li>
+                    <span class="highlight-mark" aria-hidden="true"></span>
+                    <div>
+                        <p class="highlight-title">{{ item.title }}</p>
+                        <p class="highlight-detail">{{ item.detail }}</p>
+                    </div>
+                </li>
+                }
+            </ul>
         </div>
     </aside>
 
