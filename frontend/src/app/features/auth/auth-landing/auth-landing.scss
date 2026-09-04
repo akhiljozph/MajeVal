@@ -30,7 +30,35 @@
         mask-image: radial-gradient(ellipse 70% 70% at 40% 50%, black 20%, transparent 75%);
         pointer-events: none;
         z-index: 0;
+        animation: grid-drift 18s linear infinite;
     }
+}
+
+.ambient {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(2rem);
+    opacity: 0.55;
+}
+
+.ambient-one {
+    width: min(22rem, 40vw);
+    height: min(22rem, 40vw);
+    top: 8%;
+    left: 6%;
+    background: radial-gradient(circle, rgba(232, 90, 140, 0.35), transparent 70%);
+    animation: orb-float 11s ease-in-out infinite alternate;
+}
+
+.ambient-two {
+    width: min(18rem, 34vw);
+    height: min(18rem, 34vw);
+    right: 12%;
+    bottom: 10%;
+    background: radial-gradient(circle, rgba(120, 78, 202, 0.3), transparent 70%);
+    animation: orb-float 14s ease-in-out infinite alternate-reverse;
 }
 
 .brand-panel {
@@ -48,7 +76,6 @@
     position: relative;
     z-index: 1;
     max-width: 22em;
-    animation: brand-rise 0.7s ease-out both;
 }
 
 .brand-eyebrow {
@@ -58,6 +85,8 @@
     text-transform: uppercase;
     color: rgba(232, 90, 140, 0.9);
     margin-bottom: 0.75rem;
+    animation: fade-up 0.55s ease-out both;
+    transition: color 0.35s ease, letter-spacing 0.35s ease;
 }
 
 .app-title {
@@ -68,6 +97,12 @@
     line-height: 1.05;
     letter-spacing: 0.01em;
     text-wrap: balance;
+    animation: title-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.06s both;
+    transition: letter-spacing 0.45s ease;
+}
+
+.brand-content:hover .app-title {
+    letter-spacing: 0.03em;
 }
 
 .app-tag-line {
@@ -78,12 +113,27 @@
     line-height: 1.35;
     text-wrap: pretty;
     max-width: 24ch;
-    animation: brand-rise 0.7s ease-out 0.12s both;
+    animation: fade-up 0.65s ease-out 0.14s both;
 }
 
 .brand-copy {
     margin-top: clamp(1.5rem, 3vh, 2.25rem);
-    animation: brand-rise 0.7s ease-out 0.18s both;
+    animation: fade-up 0.65s ease-out 0.22s both;
+
+    .brand-heading,
+    .brand-description {
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    &[data-mode="signup"] .brand-heading,
+    &[data-mode="signup"] .brand-description {
+        animation: copy-swap 0.45s ease both;
+    }
+
+    &[data-mode="signin"] .brand-heading,
+    &[data-mode="signin"] .brand-description {
+        animation: copy-swap 0.45s ease both;
+    }
 }
 
 .brand-heading {
@@ -109,13 +159,19 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    animation: brand-rise 0.7s ease-out 0.26s both;
+}
 
-    li {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 0.85rem;
-        align-items: flex-start;
+.highlight-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: flex-start;
+    animation: fade-up 0.55s ease-out both;
+    animation-delay: calc(0.3s + (var(--i, 0) * 0.09s));
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateX(0.35rem);
     }
 }
 
@@ -127,6 +183,14 @@
     background: #e85a8c;
     box-shadow: 0 0 0 0.3rem rgba(232, 90, 140, 0.18);
     flex-shrink: 0;
+    animation: mark-pulse 2.8s ease-in-out infinite;
+    animation-delay: calc(0.9s + (var(--i, 0) * 0.25s));
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.highlight-item:hover .highlight-mark {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 0.4rem rgba(232, 90, 140, 0.28);
 }
 
 .highlight-title {
@@ -135,6 +199,11 @@
     font-weight: 600;
     color: #f1f5f9;
     margin-bottom: 0.2rem;
+    transition: color 0.25s ease;
+}
+
+.highlight-item:hover .highlight-title {
+    color: #ffffff;
 }
 
 .highlight-detail {
@@ -156,13 +225,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     background: transparent;
-    animation: panel-fade 0.55s ease-out 0.08s both;
+    animation: panel-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
-@keyframes brand-rise {
+@keyframes fade-up {
     from {
         opacity: 0;
-        transform: translateY(0.75rem);
+        transform: translateY(0.7rem);
     }
 
     to {
@@ -171,15 +240,72 @@
     }
 }
 
-@keyframes panel-fade {
+@keyframes title-in {
     from {
         opacity: 0;
-        transform: translateX(0.75rem);
+        transform: translateY(1rem) scale(0.98);
+        filter: blur(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes copy-swap {
+    from {
+        opacity: 0;
+        transform: translateY(0.4rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes panel-in {
+    from {
+        opacity: 0;
+        transform: translateX(1rem);
     }
 
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@keyframes mark-pulse {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0.28rem rgba(232, 90, 140, 0.16);
+    }
+
+    50% {
+        box-shadow: 0 0 0 0.42rem rgba(232, 90, 140, 0.28);
+    }
+}
+
+@keyframes orb-float {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    to {
+        transform: translate3d(1.5rem, -1.25rem, 0) scale(1.08);
+    }
+}
+
+@keyframes grid-drift {
+    from {
+        background-position: 0 0, 0 0;
+    }
+
+    to {
+        background-position: 2.5rem 2.5rem, 2.5rem 2.5rem;
     }
 }
 
@@ -212,6 +338,11 @@
 
     .landing-wrapper::before {
         mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        animation: none;
+    }
+
+    .ambient {
+        opacity: 0.35;
     }
 
     .brand-panel {
@@ -224,7 +355,6 @@
 
     .brand-content {
         max-width: none;
-        animation: brand-rise 0.55s ease-out both;
     }
 
     .app-title {
@@ -250,7 +380,6 @@
         align-items: flex-start;
         min-height: 0;
         padding: 1rem 0.75rem 1.5rem;
-        animation: panel-fade 0.5s ease-out 0.06s both;
     }
 }
 
@@ -285,11 +414,26 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .brand-content,
+    .landing-wrapper::before,
+    .ambient,
+    .brand-eyebrow,
+    .app-title,
     .app-tag-line,
     .brand-copy,
-    .brand-highlights,
+    .brand-copy .brand-heading,
+    .brand-copy .brand-description,
+    .highlight-item,
+    .highlight-mark,
     .auth-panel {
-        animation: none;
+        animation: none !important;
+        transition: none !important;
+        filter: none !important;
+        transform: none !important;
+    }
+
+    .highlight-item:hover,
+    .brand-content:hover .app-title {
+        transform: none;
+        letter-spacing: inherit;
     }
 }
