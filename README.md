@@ -46,3 +46,4 @@ MajeVal is a project where an examiner can add a questionnaire for an examinee t
 - DB
     - MongoDB
     - ODM - Mongoose
+-
